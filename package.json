@@ -19,6 +19,7 @@
     "mocha": "^1.21.3",
     "karma-mocha": "^0.1.6",
     "react-tools": "^0.11.1",
-    "shelljs": "^0.3.0"
+    "shelljs": "^0.3.0",
+    "browserify": "^5.9.1"
   }
 }
