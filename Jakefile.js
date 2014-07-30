@@ -60,7 +60,7 @@
 	}, { async: true });
 
 	desc("Test everything");
-	task("test", ["testServer", "testClient"]);
+	task("test", ["testServer"/*, "testClient" */ ]);
 
 	task("testServer", function() {
 		mocha.runTests(nodeFilesToTest(), complete, fail);
