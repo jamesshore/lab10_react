@@ -15,11 +15,11 @@
 
 	var shell = require("shelljs");
 	var jshint = require("simplebuild-jshint");
-	var browserify = require("browserify");
 
 	var mocha = require("./build/util/mocha_runner.js");
 	var karma = require("./build/util/karma_runner.js");
 	var jsx = require("./build/util/jsx_runner.js");
+	var browserify = require("./build/util/browserify_runner.js");
 
 	var GENERATED_DIR = "generated";
 	var JSX_DIR = GENERATED_DIR + "/jsx";
@@ -93,19 +93,19 @@
 	});
 
 	task("browserify", [ BROWSERIFY_DIR, "compileJsx" ], function() {
-		console.log("Bundling client files with Browserify: .");
-		var b = browserify({ debug: true });
-		b.add("./" + JSX_DIR + "/example.js");
-		b.bundle(function(err, bundle) {
-			if (err) fail(err);
-			require("fs").writeFileSync(BROWSERIFY_DIR + "/bundle.js", bundle);
-			complete();
-		});
+		process.stdout.write("Bundling client files with Browserify: ");
+		browserify.bundle(compiledJsxFiles(), BROWSERIFY_DIR + "/bundle.js", complete, fail);
 	}, { async: true });
 
 	function jsxFiles() {
 		var files = new jake.FileList();
-		files.include("src/client/**.jsx");
+		files.include("src/client/**/*.jsx");
+		return files.toArray();
+	}
+
+	function compiledJsxFiles() {
+		var files = new jake.FileList();
+		files.include(JSX_DIR + "/*");
 		return files.toArray();
 	}
 
