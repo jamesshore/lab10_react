@@ -1,22 +1,87 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>DOM Testing Example</title>
+    <meta http-equiv='Content-type' content='text/html; charset=utf-8'>
+    <title>React Example</title>
 
-    <script src="example.js" type="text/javascript"></script>
+    <script src="http://fb.me/react-0.11.1.js"></script>
+    <script src="http://fb.me/JSXTransformer-0.11.1.js"></script>
 
-    <style type="text/css">
-        .example-required {
-            background-color: pink;
-        }
-    </style>
 </head>
 <body>
-    <!-- Note: This page is for manual demonstration of the example code. It's not tested like real production code should be. -->
 
-    <p><label for="textField">Example field: </label><input id="textField" type="text" /></p>
+    <p>Loading...</p>
 
-    <p><input type="submit" value="Validate" onclick="example.validateTextField(document.getElementById('textField'));"/></p>
+    <script type="text/jsx">
+        /** @jsx React.DOM */
 
+        var ConfigurationField = React.createClass({
+          render: function() {
+            return <p>{this.props.name}: _______</p>
+          }
+        });
+
+        var ConfigurationPanel = React.createClass({
+          render: function() {
+            return <div>
+              <p>Configuration:</p>
+              <ConfigurationField name="Starting Balance" />
+              <ConfigurationField name="Cost Basis" />
+              <ConfigurationField name="Yearly Spending" />
+            </div>
+          }
+        });
+
+        var StockMarketRow = React.createClass({
+          render: function() {
+            return <tr>
+              <td>{this.props.year}</td>
+              <td>$10,000</td>
+              <td>$7,000</td>
+              <td>($695)</td>
+              <td>($232)</td>
+              <td>$9,905</td>
+              <td>$108,981</td>
+            </tr>
+          }
+        });
+
+        var StockMarketTable = React.createClass({
+          render: function() {
+            return <table>
+              <thead>
+                <tr>
+                  <th>Year</th>
+                  <th>Starting Balance</th>
+                  <th>Cost Basis</th>
+                  <th>Sell Orders</th>
+                  <th>Taxes</th>
+                  <th>Growth</th>
+                  <th>Ending Balance</th>
+                </tr>
+              </thead>
+              <tbody>
+                <StockMarketRow year="2010" />
+                <StockMarketRow year="2011" />
+                <StockMarketRow year="2012" />
+                <StockMarketRow year="2013" />
+              </tbody>
+            </table>
+          }
+        });
+
+        var Application = React.createClass({
+          render: function() {
+            return <div>
+              <ConfigurationPanel />
+              <hr />
+              <StockMarketTable />
+            </div>
+          }
+        });
+
+
+        React.renderComponent(Application(), document.body);
+    </script>
 </body>
 </html>
