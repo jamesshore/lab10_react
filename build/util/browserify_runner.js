@@ -4,12 +4,18 @@
 var fs = require("fs");
 var browserify = require("browserify");
 
-exports.bundle = function(inFileList, outFilename, success, failure) {
-	var b = browserify({ debug: true });
+exports.bundle = function(baseDir, inFileList, mainFilename, outFilename, success, failure) {
+	var b = browserify({
+		debug: true,
+		basedir: baseDir
+	});
 
 	inFileList.forEach(function(file) {
 		process.stdout.write(".");
-		b.add("./" + file);
+
+		file = file.replace(baseDir + "/", "./");
+		if (file === mainFilename) b.add(file);
+		else b.require(file);
 	});
 	b.bundle(function(err, bundle) {
 		process.stdout.write("\n");

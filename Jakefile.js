@@ -83,7 +83,7 @@
 
 	task("browserify", [ BROWSERIFY_DIR, "compileJsx" ], function() {
 		process.stdout.write("Bundling client files with Browserify: ");
-		browserify.bundle(compiledJsxFiles(), BROWSERIFY_DIR + "/bundle.js", complete, fail);
+		browserify.bundle(JSX_DIR, compiledJsxFiles(), "./main.js", BROWSERIFY_DIR + "/bundle.js", complete, fail);
 	}, { async: true });
 
 	function jsxFiles() {
@@ -142,7 +142,11 @@
 
 	function jsxLintGlobals() {
 		return {
-			React: false
+			React: false,
+
+			// CommonJS
+			exports: false,
+			require: false
 		};
 	}
 

@@ -69,5 +69,5 @@
     }
   });
 
-  React.renderComponent(Application(), document.body);
+  exports.Application = Application;
 }());
