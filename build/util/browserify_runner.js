@@ -2,23 +2,16 @@
 "use strict";
 
 var fs = require("fs");
+var path = require("path");
 var browserify = require("browserify");
 
-exports.bundle = function(baseDir, inFileList, mainFilename, outFilename, success, failure) {
+exports.bundle = function(entryPoint, outFilename, success, failure) {
 	var b = browserify({
-		debug: true,
-		basedir: baseDir
+		debug: true
 	});
 
-	inFileList.forEach(function(file) {
-		process.stdout.write(".");
-
-		file = file.replace(baseDir + "/", "./");
-		if (file === mainFilename) b.add(file);
-		else b.require(file);
-	});
+	b.add(path.resolve(entryPoint));
 	b.bundle(function(err, bundle) {
-		process.stdout.write("\n");
 		if (err) return failure(err);
 		fs.writeFileSync(outFilename, bundle);
 		return success();

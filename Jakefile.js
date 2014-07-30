@@ -15,6 +15,7 @@
 
 	var shell = require("shelljs");
 	var jshint = require("simplebuild-jshint");
+	var path = require("path");
 
 	var karma = require("./build/util/karma_runner.js");
 	var jsx = require("./build/util/jsx_runner.js");
@@ -23,12 +24,14 @@
 	var GENERATED_DIR = "generated";
 	var JSX_DIR = GENERATED_DIR + "/jsx";
 	var BROWSERIFY_DIR = GENERATED_DIR + "/browserify";
+	var COLLATED_CLIENT_DIR = GENERATED_DIR + "/client";
 	var DEPLOY_DIR = GENERATED_DIR + "/deploy";
 
 	var CLIENT_DIR = "src/client";
 
 	directory(JSX_DIR);
 	directory(BROWSERIFY_DIR);
+	directory(COLLATED_CLIENT_DIR);
 	directory(DEPLOY_DIR);
 
 	desc("Delete generated files");
@@ -89,25 +92,34 @@
 	task("compileJsx", [ JSX_DIR ], function() {
 		process.stdout.write("Compiling JSX to JS: ");
 		shell.rm("-rf", JSX_DIR + "/*");
-		var pass = jsx.transformFiles(jsxFiles(), JSX_DIR);
+		var pass = jsx.transformFiles(CLIENT_DIR, jsxFiles(), JSX_DIR);
 		if (!pass) fail("JSX failed");
 	});
 
-	task("browserify", [ BROWSERIFY_DIR, "compileJsx" ], function() {
-		process.stdout.write("Bundling client files with Browserify: ");
-		browserify.bundle(JSX_DIR, compiledJsxFiles(), "./main.js", BROWSERIFY_DIR + "/bundle.js", complete, fail);
+	task("browserify", [ BROWSERIFY_DIR, "collateClient" ], function() {
+		console.log("Bundling client JavaScript with Browserify: .");
+		browserify.bundle(COLLATED_CLIENT_DIR + "/main.js", BROWSERIFY_DIR + "/bundle.js", complete, fail);
 	}, { async: true });
 
+	task("collateClient", [ COLLATED_CLIENT_DIR, "compileJsx" ], function() {
+		process.stdout.write("Collating client-side JavaScript: .");
+		shell.rm("-rf", COLLATED_CLIENT_DIR + "/*");
+		shell.cp("-R", JSX_DIR + "/*", COLLATED_CLIENT_DIR);
+
+		clientJsFiles().forEach(function(file) {
+			process.stdout.write(".");
+			var relativeFilename = "/" + file.replace(CLIENT_DIR + "/", "");
+			shell.cp(CLIENT_DIR + relativeFilename, COLLATED_CLIENT_DIR + relativeFilename);
+		});
+		process.stdout.write("\n");
+	});
+
 	function jsxFiles() {
-		var files = new jake.FileList();
-		files.include("src/client/**/*.jsx");
-		return files.toArray();
+		return new jake.FileList(CLIENT_DIR + "/**/*.jsx").toArray();
 	}
 
-	function compiledJsxFiles() {
-		var files = new jake.FileList();
-		files.include(JSX_DIR + "/*");
-		return files.toArray();
+	function clientJsFiles() {
+		return new jake.FileList(CLIENT_DIR + "/**/*.js").toArray();
 	}
 
 	function globalLintOptions() {
