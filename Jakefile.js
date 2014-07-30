@@ -16,7 +16,6 @@
 	var shell = require("shelljs");
 	var jshint = require("simplebuild-jshint");
 
-	var mocha = require("./build/util/mocha_runner.js");
 	var karma = require("./build/util/karma_runner.js");
 	var jsx = require("./build/util/jsx_runner.js");
 	var browserify = require("./build/util/browserify_runner.js");
@@ -74,17 +73,7 @@
 	}, { async: true });
 
 	desc("Test everything");
-	task("test", ["testServer"/*, "testClient" */ ]);
-
-	task("testServer", function() {
-		process.stdout.write("Testing Node.js code: ");
-		mocha.runTests(nodeFilesToTest(), complete, fail);
-	}, { async: true} );
-
-	task("testClient", function() {
-		process.stdout.write("Testing front-end code: ");
-		karma.runTests(REQUIRED_BROWSERS, complete, fail);
-	}, { async: true} );
+	task("test", [ /* TBD */ ]);
 
 	task("compileJsx", [ JSX_DIR ], function() {
 		process.stdout.write("Compiling JSX to JS: ");
@@ -107,15 +96,6 @@
 		var files = new jake.FileList();
 		files.include(JSX_DIR + "/*");
 		return files.toArray();
-	}
-
-	function nodeFilesToTest() {
-		var testFiles = new jake.FileList();
-		testFiles.include("src/_*_test.js");
-		testFiles.include("src/server/**/_*_test.js");
-		testFiles.exclude("node_modules");
-		var tests = testFiles.toArray();
-		return tests;
 	}
 
 	function globalLintOptions() {
