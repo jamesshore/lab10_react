@@ -16,6 +16,17 @@
 	var jshint = require("simplebuild-jshint");
 	var mocha = require("./build/util/mocha_runner.js");
 	var karma = require("./build/util/karma_runner.js");
+	var jsx = require("./build/util/jsx_runner.js");
+
+	var GENERATED_DIR = "generated";
+	var JS_DIR = GENERATED_DIR + "/js";
+
+	directory(JS_DIR);
+
+	desc("Delete generated files");
+	task("clean", function() {
+		jake.rmRf(GENERATED_DIR);
+	});
 
 	desc("Lint and test");
 	task("default", ["lint", "test"], function() {
@@ -42,8 +53,9 @@
 	task("lintClient", function() {
 		process.stdout.write("Linting browser code: ");
 		jshint.checkFiles({
-			files: [ "src/client/**/*.js" ],
-			options: browserLintOptions()
+			files: [ JS_DIR + "/**/*.js" ],
+			options: browserLintOptions(),
+			globals: browserLintGlobals()
 		}, complete, fail);
 	}, { async: true });
 
@@ -57,6 +69,18 @@
 	task("testClient", function() {
 		karma.runTests(REQUIRED_BROWSERS, complete, fail);
 	}, { async: true} );
+
+	task("compileJsx", [JS_DIR], function() {
+		process.stdout.write("Compiling JSX to JS: ");
+		var pass = jsx.transformFiles(jsxFiles(), JS_DIR);
+		if (!pass) fail("JSX failed");
+	});
+
+	function jsxFiles() {
+		var files = new jake.FileList();
+		files.include("src/client/**.jsx");
+		return files.toArray();
+	}
 
 	function nodeFilesToTest() {
 		var testFiles = new jake.FileList();
@@ -105,6 +129,12 @@
 			afterEach: false,
 			describe: false,
 			it: false
+		};
+	}
+
+	function browserLintGlobals() {
+		return {
+			React: false
 		};
 	}
 
