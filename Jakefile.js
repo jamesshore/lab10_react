@@ -15,16 +15,19 @@
 
 	var shell = require("shelljs");
 	var jshint = require("simplebuild-jshint");
+	var browserify = require("browserify");
 
 	var mocha = require("./build/util/mocha_runner.js");
 	var karma = require("./build/util/karma_runner.js");
 	var jsx = require("./build/util/jsx_runner.js");
 
 	var GENERATED_DIR = "generated";
-	var JS_DIR = GENERATED_DIR + "/js";
+	var JSX_DIR = GENERATED_DIR + "/jsx";
+	var BROWSERIFY_DIR = GENERATED_DIR + "/browserify";
 	var DEPLOY_DIR = GENERATED_DIR + "/deploy";
 
-	directory(JS_DIR);
+	directory(JSX_DIR);
+	directory(BROWSERIFY_DIR);
 	directory(DEPLOY_DIR);
 
 	desc("Delete generated files");
@@ -43,10 +46,10 @@
 	}, {async: true});
 
 	desc("Create deployable client files");
-	task("build", [ DEPLOY_DIR, "compileJsx" ], function() {
-		console.log("Building deploy dir: ...");
+	task("build", [ DEPLOY_DIR, "browserify" ], function() {
+		console.log("Building deploy dir: .");
 		shell.rm("-rf", DEPLOY_DIR + "/*");
-		shell.cp("-R", "src/client/*.html", JS_DIR + "/*", DEPLOY_DIR);
+		shell.cp("-R", "src/client/*.html", BROWSERIFY_DIR + "/*", DEPLOY_DIR);
 	});
 
 	desc("Lint everything");
@@ -64,7 +67,7 @@
 	task("lintJsx", [ "compileJsx" ], function() {
 		process.stdout.write("Linting JSX code: ");
 		jshint.checkFiles({
-			files: [ JS_DIR + "/**/*.js" ],
+			files: [ JSX_DIR + "/**/*.js" ],
 			options: jsxLintOptions(),
 			globals: jsxLintGlobals()
 		}, complete, fail);
@@ -83,11 +86,22 @@
 		karma.runTests(REQUIRED_BROWSERS, complete, fail);
 	}, { async: true} );
 
-	task("compileJsx", [JS_DIR], function() {
+	task("compileJsx", [ JSX_DIR ], function() {
 		process.stdout.write("Compiling JSX to JS: ");
-		var pass = jsx.transformFiles(jsxFiles(), JS_DIR);
+		var pass = jsx.transformFiles(jsxFiles(), JSX_DIR);
 		if (!pass) fail("JSX failed");
 	});
+
+	task("browserify", [ BROWSERIFY_DIR, "compileJsx" ], function() {
+		console.log("Bundling client files with Browserify: .");
+		var b = browserify({ debug: true });
+		b.add("./" + JSX_DIR + "/example.js");
+		b.bundle(function(err, bundle) {
+			if (err) fail(err);
+			require("fs").writeFileSync(BROWSERIFY_DIR + "/bundle.js", bundle);
+			complete();
+		});
+	}, { async: true });
 
 	function jsxFiles() {
 		var files = new jake.FileList();
