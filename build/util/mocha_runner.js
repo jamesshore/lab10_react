@@ -4,7 +4,10 @@
 var Mocha = require("mocha");
 
 exports.runTests = function runTests(files, success, failure) {
-	var mocha = new Mocha({ui: "bdd"});
+	var mocha = new Mocha({
+		ui: "bdd",
+		reporter: "dot"
+	});
 	files.forEach(mocha.addFile.bind(mocha));
 
 	mocha.run(function(failures) {

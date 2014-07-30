@@ -63,10 +63,12 @@
 	task("test", ["testServer"/*, "testClient" */ ]);
 
 	task("testServer", function() {
+		process.stdout.write("Testing Node.js code: ");
 		mocha.runTests(nodeFilesToTest(), complete, fail);
 	}, { async: true} );
 
 	task("testClient", function() {
+		process.stdout.write("Testing front-end code: ");
 		karma.runTests(REQUIRED_BROWSERS, complete, fail);
 	}, { async: true} );
 
