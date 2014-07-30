@@ -14,7 +14,7 @@ exports.transformFiles = function(fileList, outputDir, options) {
 	});
 	process.stdout.write("\n");
 	return pass;
-}
+};
 
 function transformOneFile(inFilename, outFilename, options) {
 	try {

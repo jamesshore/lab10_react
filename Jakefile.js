@@ -25,6 +25,8 @@
 	var BROWSERIFY_DIR = GENERATED_DIR + "/browserify";
 	var DEPLOY_DIR = GENERATED_DIR + "/deploy";
 
+	var CLIENT_DIR = "src/client";
+
 	directory(JSX_DIR);
 	directory(BROWSERIFY_DIR);
 	directory(DEPLOY_DIR);
@@ -52,23 +54,32 @@
 	});
 
 	desc("Lint everything");
-	task("lint", ["lintNode", "lintJsx"]);
+	task("lint", ["lintNode", "lintClientJs", "lintClientJsx"]);
 
 	task("lintNode", function() {
 		process.stdout.write("Linting Node.js code: ");
 		jshint.checkFiles({
-			files: [ "Jakefile.js", "src/*.js", "src/server/**/*.js", "build/util/**/ *.js" ],
+			files: [ "Jakefile.js", "src/*.js", "src/server/**/*.js", "build/util/**/*.js" ],
 			options: nodeLintOptions(),
 			globals: nodeLintGlobals()
 		}, complete, fail);
 	}, { async: true });
 
-	task("lintJsx", [ "compileJsx" ], function() {
+	task("lintClientJs", function() {
+		process.stdout.write("Linting client-side JavaScript code: ");
+		jshint.checkFiles({
+			files: CLIENT_DIR + "/**/*.js",
+			options: clientLintOptions(),
+			globals: clientLintGlobals()
+		}, complete, fail);
+	}, { async: true });
+
+	task("lintClientJsx", [ "compileJsx" ], function() {
 		process.stdout.write("Linting JSX code: ");
 		jshint.checkFiles({
-			files: [ JSX_DIR + "/**/*.js" ],
-			options: jsxLintOptions(),
-			globals: jsxLintGlobals()
+			files: JSX_DIR + "/**/*.js",
+			options: clientLintOptions(),
+			globals: clientLintGlobals()
 		}, complete, fail);
 	}, { async: true });
 
@@ -124,7 +135,7 @@
 		return options;
 	}
 
-	function jsxLintOptions() {
+	function clientLintOptions() {
 		var options = globalLintOptions();
 		options.browser = true;
 		options.newcap = false;
@@ -141,14 +152,15 @@
 		};
 	}
 
-	function jsxLintGlobals() {
+	function clientLintGlobals() {
 		return {
-			React: false,
-
 			// CommonJS
 			exports: false,
 			require: false,
-			module: false
+			module: false,
+
+			// React
+			React: false
 		};
 	}
 
