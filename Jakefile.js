@@ -39,7 +39,7 @@
 	}, {async: true});
 
 	desc("Lint everything");
-	task("lint", ["lintNode", "lintClient"]);
+	task("lint", ["lintNode", "lintJsx"]);
 
 	task("lintNode", function() {
 		process.stdout.write("Linting Node.js code: ");
@@ -50,12 +50,12 @@
 		}, complete, fail);
 	}, { async: true });
 
-	task("lintClient", function() {
-		process.stdout.write("Linting browser code: ");
+	task("lintJsx", [ "compileJsx" ], function() {
+		process.stdout.write("Linting JSX code: ");
 		jshint.checkFiles({
 			files: [ JS_DIR + "/**/*.js" ],
-			options: browserLintOptions(),
-			globals: browserLintGlobals()
+			options: jsxLintOptions(),
+			globals: jsxLintGlobals()
 		}, complete, fail);
 	}, { async: true });
 
@@ -116,9 +116,10 @@
 		return options;
 	}
 
-	function browserLintOptions() {
+	function jsxLintOptions() {
 		var options = globalLintOptions();
 		options.browser = true;
+		options.newcap = false;
 		return options;
 	}
 
@@ -132,7 +133,7 @@
 		};
 	}
 
-	function browserLintGlobals() {
+	function jsxLintGlobals() {
 		return {
 			React: false
 		};
