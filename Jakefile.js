@@ -13,23 +13,27 @@
 //		"Mobile Safari 6.0.0 (iOS 6.1)"
 	];
 
+	var shell = require("shelljs");
 	var jshint = require("simplebuild-jshint");
+
 	var mocha = require("./build/util/mocha_runner.js");
 	var karma = require("./build/util/karma_runner.js");
 	var jsx = require("./build/util/jsx_runner.js");
 
 	var GENERATED_DIR = "generated";
 	var JS_DIR = GENERATED_DIR + "/js";
+	var DEPLOY_DIR = GENERATED_DIR + "/deploy";
 
 	directory(JS_DIR);
+	directory(DEPLOY_DIR);
 
 	desc("Delete generated files");
 	task("clean", function() {
 		jake.rmRf(GENERATED_DIR);
 	});
 
-	desc("Lint and test");
-	task("default", ["lint", "test"], function() {
+	desc("Lint, test, and build");
+	task("default", ["lint", "test", "build"], function() {
 		console.log("\n\nOK");
 	});
 
@@ -37,6 +41,13 @@
 	task("karma", function() {
 		karma.serve(complete, fail);
 	}, {async: true});
+
+	desc("Create deployable client files");
+	task("build", [ DEPLOY_DIR, "compileJsx" ], function() {
+		console.log("Building deploy dir: ...");
+		shell.rm("-rf", DEPLOY_DIR + "/*");
+		shell.cp("-R", "src/client/*.html", JS_DIR + "/*", DEPLOY_DIR);
+	});
 
 	desc("Lint everything");
 	task("lint", ["lintNode", "lintJsx"]);
