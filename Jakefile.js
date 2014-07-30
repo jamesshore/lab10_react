@@ -77,6 +77,7 @@
 
 	task("compileJsx", [ JSX_DIR ], function() {
 		process.stdout.write("Compiling JSX to JS: ");
+		shell.rm("-rf", JSX_DIR + "/*");
 		var pass = jsx.transformFiles(jsxFiles(), JSX_DIR);
 		if (!pass) fail("JSX failed");
 	});
