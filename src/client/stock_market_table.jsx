@@ -4,8 +4,6 @@
 (function() {
   "use strict";
 
-  var ConfigurationPanel = require("./configuration_panel.js");
-
   var StockMarketRow = React.createClass({
     render: function() {
       return <tr>
@@ -44,15 +42,5 @@
     }
   });
 
-  var Application = React.createClass({
-    render: function() {
-      return <div>
-        <ConfigurationPanel />
-        <hr />
-        <StockMarketTable />
-      </div>;
-    }
-  });
-
-  exports.Application = Application;
+  module.exports = StockMarketTable;
 }());

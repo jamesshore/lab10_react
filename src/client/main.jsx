@@ -4,7 +4,7 @@
 (function() {
   "use strict";
 
-  var Application = require("./example.js").Application;
+  var ApplicationUi = require("./application_ui.js");
 
-  React.renderComponent(Application(), document.body);
+  React.renderComponent(ApplicationUi(), document.body);
 }());
