@@ -9,12 +9,13 @@ module.exports = function(config) {
 
 
     // frameworks to use
-    frameworks: ['mocha', 'expect'],
+    frameworks: ['mocha', 'expect', 'commonjs'],
 
 
     // list of files / patterns to load in the browser
     files: [
-      'src/client/**/*.js'
+	    'generated/client/vendor/react-0.11.1.js',    // must be loaded first in order for test to work
+      'generated/client/**/*.js'
     ],
 
 
@@ -23,6 +24,11 @@ module.exports = function(config) {
       
     ],
 
+	  // preprocesors
+	  preprocessors: {
+		  'generated/client/*.js': ['commonjs'],
+		  'generated/client/ui/*.js': ['commonjs']
+	  },
 
     // test results reporter to use
     // possible values: 'dots', 'progress', 'junit', 'growl', 'coverage'

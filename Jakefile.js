@@ -71,7 +71,7 @@
 	task("lintClientJs", function() {
 		process.stdout.write("Linting client-side JavaScript code: ");
 		jshint.checkFiles({
-			files: CLIENT_DIR + "/**/*.js",
+			files: [ CLIENT_DIR + "/**/*.js", "!" + CLIENT_DIR + "/vendor/**/*" ],
 			options: clientLintOptions(),
 			globals: clientLintGlobals()
 		}, complete, fail);
@@ -87,7 +87,11 @@
 	}, { async: true });
 
 	desc("Test everything");
-	task("test", [ /* TBD */ ]);
+	task("test", [ "testClient" ]);
+
+	task("testClient", [ "collateClient" ], function() {
+		karma.runTests(REQUIRED_BROWSERS, complete, fail);
+	}, { async: true} );
 
 	task("compileJsx", [ JSX_DIR ], function() {
 		process.stdout.write("Compiling JSX to JS: ");
@@ -109,6 +113,7 @@
 		clientJsFiles().forEach(function(file) {
 			process.stdout.write(".");
 			var relativeFilename = "/" + file.replace(CLIENT_DIR + "/", "");
+			shell.mkdir("-p", path.dirname(COLLATED_CLIENT_DIR + relativeFilename));
 			shell.cp(CLIENT_DIR + relativeFilename, COLLATED_CLIENT_DIR + relativeFilename);
 		});
 		process.stdout.write("\n");
