@@ -14,7 +14,6 @@ module.exports = function(config) {
 
     // list of files / patterns to load in the browser
     files: [
-	    'generated/client/vendor/react-0.11.1.js',    // must be loaded first in order for test to work
       'generated/client/**/*.js'
     ],
 
@@ -26,6 +25,7 @@ module.exports = function(config) {
 
 	  // preprocesors
 	  preprocessors: {
+		  // be sure not to load the vendor directory! It's not Browserified so shouldn't be preprocessed.
 		  'generated/client/*.js': ['commonjs'],
 		  'generated/client/ui/*.js': ['commonjs']
 	  },
