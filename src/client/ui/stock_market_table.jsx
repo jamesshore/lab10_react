@@ -4,19 +4,7 @@
 (function() {
   "use strict";
 
-  var StockMarketRow = React.createClass({
-    render: function() {
-      return <tr>
-        <td>{this.props.year}</td>
-        <td>$10,000</td>
-        <td>$7,000</td>
-        <td>($695)</td>
-        <td>($232)</td>
-        <td>$9,905</td>
-        <td>$108,981</td>
-      </tr>;
-    }
-  });
+  var StockMarketRow = require("./stock_market_table_row.js");
 
   var StockMarketTable = React.createClass({
     render: function() {

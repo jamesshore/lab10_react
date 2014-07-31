@@ -163,11 +163,13 @@
 
 	function globalLintGlobals() {
 		return {
-			// Mocha/Expect globals
+			// Mocha
 			beforeEach: false,
 			afterEach: false,
 			describe: false,
 			it: false,
+
+			// Expect
 			expect: false
 		};
 	}
@@ -178,6 +180,9 @@
 
 	function clientLintGlobals() {
 		var globals = globalLintGlobals();
+
+		// Karma
+		globals.dump = false;
 
 		// CommonJS
 		globals.exports = false;

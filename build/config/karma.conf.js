@@ -17,7 +17,7 @@ module.exports = function(config) {
 	    // vendor files must be loaded in this order to work on IE 8
 	    'src/vendor/es5-shim-4.0.1.js',
 	    'src/vendor/es5-sham-4.0.1.js',
-	    'src/vendor/react-0.11.1.js',
+	    'src/vendor/react-with-addons-0.11.1.js',
 
       'generated/client/**/*.js'
     ],
