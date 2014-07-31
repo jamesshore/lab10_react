@@ -8,9 +8,7 @@
 	var StockMarketTableRow = require("./stock_market_table_row.js");
 
 	describe("StockMarket Table Row", function() {
-		it("renders static HTML with year", function() {
-//			var table = TestUtils.renderIntoDocument(<StockMarketTableRow year="1989" />);
-//			dump(TestUtils.findRenderedDOMComponentWithTag(table, "table").getDOMNode().innerHTML);
+		it("tests static HTML", function() {
 			var rendered = React.renderComponentToStaticMarkup(<StockMarketTableRow year="1989" />);
 			expect(rendered).to.equal("" +
 				"<tr>" +
