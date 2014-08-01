@@ -22,6 +22,13 @@
 				"</tr>"
 			);
 		});
+
+		it("tests exactly the property logic of our component", function() {
+			var row = TestUtils.renderIntoDocument(<table><tbody><StockMarketTableRow year="1989" /></tbody></table>);
+			var firstTd = TestUtils.scryRenderedDOMComponentsWithTag(row, "td")[0];
+
+			expect(firstTd.getDOMNode().innerHTML).to.equal("1989");
+		});
 	});
 
 }());
