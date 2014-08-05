@@ -1,3 +1,5 @@
+/* General */
+
 body, input {
 	font-family: sans-serif;
 	font-size: 14px;
@@ -7,6 +9,9 @@ body {
 	max-width: 60em;
 }
 
+.negative {
+	color: red;
+}
 
 /* Title */
 
@@ -38,7 +43,6 @@ h2 {
 	width: 15em;
 	margin-bottom: 0.5ex;
 }
-
 
 
 /* Stock Market Table */
