@@ -10,9 +10,16 @@
   var ApplicationUi = React.createClass({
     render: function() {
       return <div>
+	      <h1>Financial Projector</h1>
+	      <h2>A React Example from <em>Let’s Code: Test-Driven JavaScript</em></h2>
+
         <ConfigurationPanel />
         <hr />
         <StockMarketTable />
+
+	      <div className="footer">
+		      <p>This application demonstrates the React library. The financial calculations are made up. Do not use it for real finances.</p>
+	      </div>
       </div>;
     }
   });

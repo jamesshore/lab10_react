@@ -3,6 +3,27 @@ body, input {
 	font-size: 14px;
 }
 
+body {
+	max-width: 60em;
+}
+
+
+/* Title */
+
+h1, h2 {
+	text-align: center;
+}
+
+h1 {
+	margin-bottom: 0.25ex;
+}
+
+h2 {
+	margin-top: 0.25ex;
+	margin-bottom: 2ex;
+}
+
+
 /* Configuration Panel */
 
 .config label {
@@ -27,7 +48,6 @@ body, input {
 	text-align: left;
 	border: solid 1px lightgray;
 	width: 100%;
-	max-width: 60em;
 }
 
 .stockmarket td, .stockmarket th {
@@ -49,4 +69,13 @@ body, input {
 
 .stockmarket th {
 	background-color: lightgray;
+}
+
+
+/* Footer */
+
+.footer {
+	margin-top: 5ex;
+	font-size: 0.75em;
+	font-style: italic;
 }
