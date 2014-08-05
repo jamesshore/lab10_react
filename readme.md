@@ -8,7 +8,7 @@ This episode is an exploration and review of the [React](http://facebook.github.
 1. **Sample application.** The sample application code can be found in `src/client`. The app runs inside `example.html`. It launches from `main.js`. The code that does all the work, though, is in the JSX files in `src/client/ui`. 
 
 2. **Production-mode JSX transformation.** We use Jake to translate React's JSX language to JavaScript. See the "compileJsx" target in `Jakefile.js` and `build/util/jsx_runner.js` for example code. You can use `jsx_runner.js` in your own build scripts. 
-
+($11,171)
 3. **Modularity.** We use CommonJS `require()` statements for modularity, and we use Browserify to make it work. See the sample application for an example of how the modularity works in practice. See the "browserify" target in `Jakefile.js` and `build/util/browserify_runner.js` for the automated build. You can use `browserify_runner.js` in your own build scripts.
 
 4. **Unit Tests.** We provide a sample unit test in `src/client/ui/_stock_market_table_row_test.js`. The file demonstrates two different approaches: string comparison using `React.renderComponentToStaticMarkup()` (the first test) and targeted DOM comparisons using the TestUtils library (the second test).
