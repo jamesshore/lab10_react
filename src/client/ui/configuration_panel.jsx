@@ -6,14 +6,15 @@
 
   var ConfigurationField = React.createClass({
     render: function() {
-      return <p>{this.props.name}: _______</p>;
+      return <div>
+	      <label>{this.props.name}: </label><input type="text" />
+      </div>;
     }
   });
 
   var ConfigurationPanel = React.createClass({
     render: function() {
-      return <div>
-        <p>Configuration:</p>
+      return <div className="config">
         <ConfigurationField name="Starting Balance" />
         <ConfigurationField name="Cost Basis" />
         <ConfigurationField name="Yearly Spending" />

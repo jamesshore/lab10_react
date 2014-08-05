@@ -1,9 +1,28 @@
-body {
+body, input {
 	font-family: sans-serif;
 	font-size: 14px;
 }
 
-table.stockmarket {
+/* Configuration Panel */
+
+.config label {
+	display: inline-block;
+	width: 9em;
+	text-align: right;
+	vertical-align: baseline;
+	padding-right: 0.5em;
+}
+
+.config input {
+	width: 15em;
+	margin-bottom: 0.5ex;
+}
+
+
+
+/* Stock Market Table */
+
+.stockmarket {
 	border-collapse: collapse;
 	text-align: left;
 	border: solid 1px lightgray;
@@ -11,23 +30,23 @@ table.stockmarket {
 	max-width: 60em;
 }
 
-table.stockmarket td, table.stockmarket th {
+.stockmarket td, .stockmarket th {
 	padding: 0.5ex 0.25em 0.1ex 0.25em;
 	border-left: solid 1px lightgray;
 }
 
-table.stockmarket th {
+.stockmarket th {
 	border-left-color: white;
 }
 
-table.stockmarket tr {
+.stockmarket tr {
 	background-color: rgb(209, 229, 255);   /* light blue */
 }
 
-table.stockmarket tr:nth-child(odd) {
+.stockmarket tr:nth-child(odd) {
 	background-color: white;
 }
 
-table.stockmarket th {
+.stockmarket th {
 	background-color: lightgray;
 }
