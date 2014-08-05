@@ -1,3 +1,33 @@
 body {
-	background-color: grey;
+	font-family: sans-serif;
+	font-size: 14px;
+}
+
+table.stockmarket {
+	border-collapse: collapse;
+	text-align: left;
+	border: solid 1px lightgray;
+	width: 100%;
+	max-width: 60em;
+}
+
+table.stockmarket td, table.stockmarket th {
+	padding: 0.5ex 0.25em 0.1ex 0.25em;
+	border-left: solid 1px lightgray;
+}
+
+table.stockmarket th {
+	border-left-color: white;
+}
+
+table.stockmarket tr {
+	background-color: rgb(209, 229, 255);   /* light blue */
+}
+
+table.stockmarket tr:nth-child(odd) {
+	background-color: white;
+}
+
+table.stockmarket th {
+	background-color: lightgray;
 }

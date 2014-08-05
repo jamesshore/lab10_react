@@ -8,7 +8,7 @@
 
   var StockMarketTable = React.createClass({
     render: function() {
-      return <table>
+      return <table className="stockmarket">
         <thead>
           <tr>
             <th>Year</th>
