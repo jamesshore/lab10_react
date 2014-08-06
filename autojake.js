@@ -13,7 +13,7 @@
 	var gaze = require("gaze");
 	var spawn = require("child_process").spawn;
 
-	var WATCH = "src/**/*.js";
+	var WATCH = "src/**/*.js*";
 
 	var COMMAND = "./jake.sh";   // Mac/Unix
 //	var COMMAND = "jake.bat";                 // Windows
