@@ -55,6 +55,19 @@ ValidDollars.prototype.min = function min(operand) {
 	});
 };
 
+ValidDollars.prototype.toString = function toString() {
+	var result = absoluteValueString(this._amount);
+	if (this._amount < 0) result = "(" + result + ")";
+	return result;
+};
+
+function absoluteValueString(amount) {
+// The following regex courtesy of Elias Zamaria, http://stackoverflow.com/a/2901298
+	var unformatted = "" + Math.round(Math.abs(amount));
+	var formatted = unformatted.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+	return "$" + formatted;
+}
+
 function arithmetic(self, operand, fn) {
 	failFast.unlessDefined(operand, "operand");
 	if (!operand.isValid()) return new InvalidDollars();
