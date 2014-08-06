@@ -10,6 +10,12 @@ exports.unlessNumber = function(variable, variableName) {
 	if (type !== "number") throw new FailFastException(exports.unlessNumber, "Expected variable" + normalize(variableName) + "to be number, but was " + type);
 };
 
+exports.unlessString = function(variable, variableName) {
+	var actualType = getType(variable);
+	var expectedType = "string";
+	if (actualType !== expectedType) throw new FailFastException(exports.unlessNumber, "Expected variable" + normalize(variableName) + "to be " + expectedType + ", but was " + actualType);
+};
+
 exports.unlessTrue = function(variable, message) {
 	if (message === undefined) message = "Expected condition to be true";
 

@@ -44,6 +44,10 @@ describe("FailFast", function() {
 		expect(unlessNumber("foo", "name")).to.throwException(/Expected variable \[name\] to be number, but was string/);
 	});
 
+	it("checks if variable is other types as well", function() {
+		expect(wrap(failFast.unlessString)(null, "name")).to.throwException(/Expected variable \[name\] to be string, but was null/);
+	});
+
 	it("checks if condition is true", function() {
 		var unlessTrue = wrap(failFast.unlessTrue);
 
