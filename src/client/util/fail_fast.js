@@ -5,16 +5,10 @@ exports.unlessDefined = function(variable, variableName) {
 	if (variable === undefined) throw new FailFastException(exports.unlessDefined, "Required variable" + normalize(variableName) + "was not defined");
 };
 
-exports.unlessNumber = function(variable, variableName) {
-	var type = getType(variable);
-	if (type !== "number") throw new FailFastException(exports.unlessNumber, "Expected variable" + normalize(variableName) + "to be number, but was " + type);
-};
-
-exports.unlessString = function(variable, variableName) {
-	var actualType = getType(variable);
-	var expectedType = "string";
-	if (actualType !== expectedType) throw new FailFastException(exports.unlessNumber, "Expected variable" + normalize(variableName) + "to be " + expectedType + ", but was " + actualType);
-};
+exports.unlessNumber = checkTypeFn("number");
+exports.unlessString = checkTypeFn("string");
+exports.unlessArray = checkTypeFn("array");
+exports.unlessObject = checkTypeFn("object");
 
 exports.unlessTrue = function(variable, message) {
 	if (message === undefined) message = "Expected condition to be true";
@@ -28,6 +22,13 @@ exports.unreachable = function(message) {
 
 	throw new FailFastException(exports.unreachable, message);
 };
+
+function checkTypeFn(expectedType) {
+	return function(variable, variableName) {
+		var actualType = getType(variable);
+		if (actualType !== expectedType) throw new FailFastException(exports.unlessNumber, "Expected variable" + normalize(variableName) + "to be " + expectedType + ", but was " + actualType);
+	};
+}
 
 function getType(variable) {
 	var type = typeof variable;

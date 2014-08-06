@@ -46,6 +46,8 @@ describe("FailFast", function() {
 
 	it("checks if variable is other types as well", function() {
 		expect(wrap(failFast.unlessString)(null, "name")).to.throwException(/Expected variable \[name\] to be string, but was null/);
+		expect(wrap(failFast.unlessArray)(null, "name")).to.throwException(/Expected variable \[name\] to be array, but was null/);
+		expect(wrap(failFast.unlessObject)(null, "name")).to.throwException(/Expected variable \[name\] to be object, but was null/);
 	});
 
 	it("checks if condition is true", function() {
