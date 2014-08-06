@@ -8,12 +8,12 @@ describe("FailFastException", function() {
 
 	it("looks like this", function() {
 		try {
-			throw new FailFastException("foo");
+			throw new FailFastException(function() {}, "foo");
 		}
 		catch(e) {
 			expect(e.name).to.equal("FailFastException");
 			expect(e.constructor).to.equal(FailFastException);
-			expect("" + e).to.equal("FailFastException");
+			expect("" + e).to.equal("FailFastException: foo");
 		}
 	});
 
