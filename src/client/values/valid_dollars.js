@@ -19,7 +19,7 @@ ValidDollars.prototype.isValid = function isValid() {
 	return true;
 };
 
-ValidDollars.prototype._toCoreDataType = function _toCoreDataType() {
+ValidDollars.prototype._toNumber = function _toNumber() {
 	return this._amount;
 };
 
@@ -67,7 +67,7 @@ ValidDollars.prototype.renderTo = function renderTo(target) {
 };
 
 function absoluteValueString(amount) {
-// The following regex courtesy of Elias Zamaria, http://stackoverflow.com/a/2901298
+	// The following regex courtesy of Elias Zamaria, http://stackoverflow.com/a/2901298
 	var unformatted = "" + Math.round(Math.abs(amount));
 	var formatted = unformatted.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 	return "$" + formatted;
@@ -77,7 +77,7 @@ function arithmetic(self, operand, fn) {
 	failFast.unlessDefined(operand, "operand");
 	if (!operand.isValid()) return new InvalidDollars();
 
-	return new ValidDollars(fn(self._amount, operand._toCoreDataType()));
+	return new ValidDollars(fn(self._amount, operand._toNumber()));
 }
 
 function inRange(value) {

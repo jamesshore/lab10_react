@@ -9,16 +9,16 @@ var __RenderTargetStub = require("./__render_target_stub.js");
 var MAX_VALID = new ValidDollars(ValidDollars.MAX_VALUE);
 var MIN_VALID = new ValidDollars(ValidDollars.MIN_VALUE);
 
-var _0 = new ValidDollars(0);
-var _10 = new ValidDollars(10);
-var _20 = new ValidDollars(20);
-var _30 = new ValidDollars(30);
-var _50 = new ValidDollars(50);
-var _100 = new ValidDollars(100);
-var _minus20 = new ValidDollars(-20);
-var invalid = new InvalidDollars();
-
 describe("ValidDollars", function() {
+
+	var _0 = new ValidDollars(0);
+	var _10 = new ValidDollars(10);
+	var _20 = new ValidDollars(20);
+	var _30 = new ValidDollars(30);
+	var _50 = new ValidDollars(50);
+	var _100 = new ValidDollars(100);
+	var _minus20 = new ValidDollars(-20);
+	var invalid = new InvalidDollars();
 
 	describe("logic", function() {
 		it("prevents dollars from being constructed outside of valid range", function() {
@@ -31,7 +31,7 @@ describe("ValidDollars", function() {
 		});
 
 		it("converts to underlying data type (for 'Dollars family' use only)", function() {
-			expect(new ValidDollars(12.34567891)._toCoreDataType()).to.equal(12.34567891);
+			expect(new ValidDollars(12.34567891)._toNumber()).to.equal(12.34567891);
 		});
 
 		it("adds", function() {
@@ -67,6 +67,7 @@ describe("ValidDollars", function() {
 		});
 	});
 
+
 	describe("string conversion", function() {
 		it("ignores pennies", function() {
 			expect(new ValidDollars(10.10) + "").to.equal("$10");
@@ -74,8 +75,6 @@ describe("ValidDollars", function() {
 			expect(new ValidDollars(10.5) + "").to.equal("$11");
 			expect(new ValidDollars(-0.5) + "").to.equal("($1)");
 		});
-
-
 
 		it("formats long numbers with commas", function() {
 			expect(new ValidDollars(1234) + "").to.equal("$1,234");
@@ -88,6 +87,7 @@ describe("ValidDollars", function() {
 			expect(_0 + "").to.equal("$0");
 		});
 	});
+
 
 	describe("rendering", function() {
 		var target = new __RenderTargetStub();
