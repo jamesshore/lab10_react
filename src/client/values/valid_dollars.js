@@ -61,6 +61,11 @@ ValidDollars.prototype.toString = function toString() {
 	return result;
 };
 
+ValidDollars.prototype.renderTo = function renderTo(target) {
+	target.setText(this.toString());
+	if (this._amount <= -0.5) target.setNegative();
+};
+
 function absoluteValueString(amount) {
 // The following regex courtesy of Elias Zamaria, http://stackoverflow.com/a/2901298
 	var unformatted = "" + Math.round(Math.abs(amount));
