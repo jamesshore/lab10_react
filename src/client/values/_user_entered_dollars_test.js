@@ -49,9 +49,66 @@ describe("UserEnteredDollars", function() {
 	});
 
 	describe("string parsing", function() {
-		it("parses illegals", function() {
-
+		it("parses numbers", function() {
+			expect(parse("")).to.equal(0);
+			expect(parse("42")).to.equal(42);
+			expect(parse("42.13")).to.equal(42.13);
 		});
+
+		it("parses dollar signs", function() {
+			expect(parse("$42")).to.equal(42);
+			expect(parse("$")).to.equal(0);
+		});
+
+		it("parses commas", function() {
+			expect(parse("1,234")).to.equal(1234);
+			expect(parse("1,234,567")).to.equal(1234567);
+			expect(parse(",,,4,,,,,,2,,,")).to.equal(42);
+		});
+
+		it("parses negative signs", function() {
+			expect(parse("-42")).to.equal(-42);
+			expect(parse("-$42")).to.equal(-42);
+			expect(parse("$-42")).to.equal(-42);
+			expect(parse("-")).to.equal(0);
+			expect(parse("-$")).to.equal(0);
+			expect(parse("$-")).to.equal(0);
+		});
+
+		it("parses parentheses", function() {
+			expect(parse("(42)")).to.equal(-42);
+			expect(parse("($42)")).to.equal(-42);
+			expect(parse("$(42)")).to.equal("invalid");
+
+			expect(parse("(-42)")).to.equal("invalid");
+			expect(parse("-(42)")).to.equal("invalid");
+
+			expect(parse("$-(42)")).to.equal("invalid");
+			expect(parse("$(-42)")).to.equal("invalid");
+			expect(parse("-$(42)")).to.equal("invalid");
+			expect(parse("-($42)")).to.equal("invalid");
+			expect(parse("(-$42)")).to.equal("invalid");
+			expect(parse("($-42)")).to.equal("invalid");
+
+			expect(parse("(42")).to.equal(-42);
+			expect(parse("42)")).to.equal(-42);
+
+			expect(parse("(")).to.equal(0);
+			expect(parse(")")).to.equal(0);
+			expect(parse("()")).to.equal(0);
+		});
+
+		it("parses illegals", function() {
+			expect(parse("x")).to.equal("invalid");
+			expect(parse("40e2")).to.equal("invalid");
+			expect(parse("40x")).to.equal("invalid");
+			expect(parse("NaN")).to.equal("invalid");
+		});
+
+		function parse(string) {
+			var parsed = new UserEnteredDollars(string);
+			return parsed.isValid() ? parsed._toNumber() : "invalid";
+		}
 	});
 
 });

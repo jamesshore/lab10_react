@@ -5,12 +5,10 @@ var failFast = require("../util/fail_fast.js");
 var ValidDollars = require("./valid_dollars.js");
 var InvalidDollars = require("./invalid_dollars.js");
 
-var UserEnteredDollars = module.exports = function UserEnteredDollars(amount) {
-	failFast.unlessString(amount, "amount");
+var UserEnteredDollars = module.exports = function UserEnteredDollars(text) {
+	failFast.unlessString(text, "text");
 
-	var number = parseFloat(amount);
-	if (isNaN(number)) this._backingDollars = new InvalidDollars();
-	else this._backingDollars = new ValidDollars(number);
+	this._backingDollars = parse(text);
 };
 
 UserEnteredDollars.prototype.isValid = function isValid() {
@@ -44,3 +42,40 @@ UserEnteredDollars.prototype.percentage = function percentage(percent) {
 UserEnteredDollars.prototype.min = function min(operand) {
 	return this._backingDollars.min(operand);
 };
+
+
+function parse(text) {
+	var parenthesis = false;
+	if (startsWith("(")) {
+		text = text.substr(1);
+		parenthesis = true;
+	}
+	if (endsWith(")")) {
+		text = text.substr(0, text.length - 1);
+		parenthesis = true;
+	}
+	if (parenthesis) text = "-" + text;
+
+	if (startsWith("$")) text = text.substr(1);
+	if (startsWith("-$")) text = "-" + text.substr(2);
+	text = text.replace(/,/g, "");
+
+	if (text === "" || text === "-") return new ValidDollars(0);
+
+	if (text.match(/[^\d\.\-]/)) return new InvalidDollars();
+
+	var number = parseFloat(text);
+	if (isNaN(number)) return new InvalidDollars();
+	else return new ValidDollars(number);
+
+
+	function startsWith(start) {
+		// This code courtesy of CMS, http://stackoverflow.com/a/646643
+		return text.slice(0, start.length) === start;
+	}
+
+	function endsWith(end) {
+		// This code courtesy of CMS, http://stackoverflow.com/a/646643
+		return text.slice(-end.length) === end;
+	}
+}
