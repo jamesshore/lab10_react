@@ -34,6 +34,24 @@ describe("FailFast", function() {
 		}
 	});
 
+	it("checks if variable is number", function() {
+		expect(unlessNumber(0)).to.not.throwException();
+		expect(unlessNumber("foo")).to.throwException(/Expected variable to be number, but was string/);
+		expect(unlessNumber({})).to.throwException(/Expected variable to be number, but was object/);
+		expect(unlessNumber([])).to.throwException(/Expected variable to be number, but was array/);
+		expect(unlessNumber(undefined)).to.throwException(/Expected variable to be number, but was undefined/);
+		expect(unlessNumber(null)).to.throwException(/Expected variable to be number, but was null/);
+		expect(unlessNumber(NaN)).to.throwException(/Expected variable to be number, but was NaN/);
+
+		expect(unlessNumber("foo", "name")).to.throwException(/Expected variable \[name\] to be number, but was string/);
+
+		function unlessNumber(variable, variableName) {
+			return function() {
+				failFast.unlessNumber(variable, variableName);
+			};
+		}
+	});
+
 	it("checks if condition is true", function() {
 		expect(unlessTrue(true)).to.not.throwException();
 		expect(unlessTrue(false)).to.throwException(/Expected condition to be true/);
