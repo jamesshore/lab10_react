@@ -3,6 +3,7 @@
 
 var ValidDollars = require("./valid_dollars.js");
 var InvalidDollars = require("./invalid_dollars.js");
+var UserEnteredDollars = require("./user_entered_dollars.js");
 var FailFastException = require("../util/fail_fast.js").FailFastException;
 var __RenderTargetStub = require("./__render_target_stub.js");
 
@@ -19,6 +20,7 @@ describe("ValidDollars", function() {
 	var _100 = new ValidDollars(100);
 	var _minus20 = new ValidDollars(-20);
 	var invalid = new InvalidDollars();
+	var user20 = new UserEnteredDollars("20");
 
 	describe("logic", function() {
 		it("prevents dollars from being constructed outside of valid range", function() {
@@ -37,18 +39,21 @@ describe("ValidDollars", function() {
 		it("adds", function() {
 			expect(_10.plus(_20)).to.eql(_30);
 			expect(_10.plus(invalid)).to.eql(invalid);
+			expect(_10.plus(user20)).to.eql(_30);
 		});
 
 		it("subtracts", function() {
 			expect(_50.minus(_30)).to.eql(_20);
 			expect(_30.minus(_50)).to.eql(_minus20);
 			expect(_50.minus(invalid)).to.eql(invalid);
+			expect(_50.minus(user20)).to.eql(_30);
 		});
 
 		it("subtracts with a floor of zero (this comes up more often than you might think)", function() {
 			expect(_50.subtractToZero(_30)).to.eql(_20);
 			expect(_30.subtractToZero(_50)).to.eql(_0);
 			expect(_30.subtractToZero(invalid)).to.eql(invalid);
+			expect(_30.subtractToZero(user20)).to.eql(_10);
 		});
 
 		it("flips the sign", function() {
@@ -64,6 +69,8 @@ describe("ValidDollars", function() {
 		it("determines lesser of two values", function() {
 			expect(_20.min(_30)).to.eql(_20);
 			expect(_30.min(_20)).to.eql(_20);
+			expect(_30.min(invalid)).to.eql(invalid);
+			expect(_30.min(user20)).to.eql(_20);
 		});
 	});
 
