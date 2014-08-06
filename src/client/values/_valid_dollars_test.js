@@ -15,6 +15,7 @@ describe("ValidDollars", function() {
 	var _20 = new ValidDollars(20);
 	var _30 = new ValidDollars(30);
 	var _50 = new ValidDollars(50);
+	var _100 = new ValidDollars(100);
 	var _minus20 = new ValidDollars(-20);
 	var invalid = new InvalidDollars();
 
@@ -47,5 +48,22 @@ describe("ValidDollars", function() {
 		expect(_30.subtractToZero(_50)).to.eql(_0);
 		expect(_30.subtractToZero(invalid)).to.eql(invalid);
 	});
+
+	it("flips the sign", function() {
+		expect(_0.flipSign()).to.eql(_0);
+		expect(_20.flipSign()).to.eql(_minus20);
+		expect(_minus20.flipSign()).to.eql(_20);
+	});
+
+	it("calculates percentage amount", function() {
+		expect(_100.percentage(20)).to.eql(_20);
+	});
+
+	it("determines lesser of two values", function() {
+		expect(_20.min(_30)).to.eql(_20);
+		expect(_30.min(_20)).to.eql(_20);
+	});
+
+	
 
 });

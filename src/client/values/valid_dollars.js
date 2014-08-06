@@ -41,6 +41,20 @@ ValidDollars.prototype.subtractToZero = function subtractToZero(operand) {
 	});
 };
 
+ValidDollars.prototype.flipSign = function flipSign(operand) {
+	return new ValidDollars(this._amount * -1);
+};
+
+ValidDollars.prototype.percentage = function percentage(operand) {
+	return new ValidDollars(this._amount * operand / 100);
+};
+
+ValidDollars.prototype.min = function min(operand) {
+	return arithmetic(this, operand, function(left, right) {
+		return Math.min(left, right);
+	});
+};
+
 function arithmetic(self, operand, fn) {
 	failFast.unlessDefined(operand, "operand");
 	if (!operand.isValid()) return new InvalidDollars();
