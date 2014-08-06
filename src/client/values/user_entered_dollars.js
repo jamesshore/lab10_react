@@ -43,6 +43,14 @@ UserEnteredDollars.prototype.min = function min(operand) {
 	return this._backingDollars.min(operand);
 };
 
+UserEnteredDollars.prototype.toString = function toString() {
+	return this._backingDollars.toString();
+};
+
+UserEnteredDollars.prototype.renderTo = function renderTo(target) {
+	this._backingDollars.renderTo(target);
+};
+
 
 function parse(text) {
 	var parenthesis = false;
