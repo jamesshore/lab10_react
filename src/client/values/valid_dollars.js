@@ -24,26 +24,29 @@ ValidDollars.prototype._toCoreDataType = function _toCoreDataType() {
 };
 
 ValidDollars.prototype.plus = function plus(operand) {
-	failFast.unlessDefined(operand, "operand");
-	if (!operand.isValid()) return new InvalidDollars();
-
-	return new ValidDollars(this._amount + operand._toCoreDataType());
+	return arithmetic(this, operand, function(left, right) {
+		return left + right;
+	});
 };
 
 ValidDollars.prototype.minus = function minus(operand) {
-	failFast.unlessDefined(operand, "operand");
-	if (!operand.isValid()) return new InvalidDollars();
-
-	return new ValidDollars(this._amount - operand._toCoreDataType());
+	return arithmetic(this, operand, function(left, right) {
+		return left - right;
+	});
 };
 
 ValidDollars.prototype.subtractToZero = function subtractToZero(operand) {
+	return arithmetic(this, operand, function(left, right) {
+		return Math.max(0, left - right);
+	});
+};
+
+function arithmetic(self, operand, fn) {
 	failFast.unlessDefined(operand, "operand");
 	if (!operand.isValid()) return new InvalidDollars();
-	
-	var result = this._amount - operand._toCoreDataType();
-	return new ValidDollars(Math.max(0, result));
-};
+
+	return new ValidDollars(fn(self._amount, operand._toCoreDataType()));
+}
 
 function inRange(value) {
 	failFast.unlessDefined(value, "value");
