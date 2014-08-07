@@ -30,8 +30,11 @@ describe("FailFast", function() {
 		expect(unlessDefined(undefined, "myVariable")).to.throwException(/Required variable \[myVariable\] was not defined/);
 	});
 
-	it("checks if variable is number", function() {
+	it("checks if variable is number, string, or array", function() {
 		var unlessNumber = wrap(failFast.unlessNumber);
+		var unlessString = wrap(failFast.unlessString);
+		var unlessArray = wrap(failFast.unlessArray);
+		var unlessFunction = wrap(failFast.unlessFunction);
 
 		expect(unlessNumber(0)).to.not.throwException();
 		expect(unlessNumber("foo")).to.throwException(/Expected variable to be number, but was string/);
@@ -42,12 +45,32 @@ describe("FailFast", function() {
 		expect(unlessNumber(NaN)).to.throwException(/Expected variable to be number, but was NaN/);
 
 		expect(unlessNumber("foo", "name")).to.throwException(/Expected variable \[name\] to be number, but was string/);
+
+		expect(unlessString(null, "name")).to.throwException(/Expected variable \[name\] to be string, but was null/);
+		expect(unlessArray(null, "name")).to.throwException(/Expected variable \[name\] to be array, but was null/);
+		expect(unlessFunction(null, "name")).to.throwException(/Expected variable \[name\] to be function, but was null/);
 	});
 
-	it("checks if variable is other types as well", function() {
-		expect(wrap(failFast.unlessString)(null, "name")).to.throwException(/Expected variable \[name\] to be string, but was null/);
-		expect(wrap(failFast.unlessArray)(null, "name")).to.throwException(/Expected variable \[name\] to be array, but was null/);
-		expect(wrap(failFast.unlessObject)(null, "name")).to.throwException(/Expected variable \[name\] to be object, but was null/);
+	it("checks if variable is object of specific type", function() {
+		function Example1() {}
+		function Example2() {}
+		function NoConstructor() {}
+		delete NoConstructor.constructor;
+		var Anon = function() {};
+		var unlessObject = wrap(failFast.unlessObject);
+
+		expect(unlessObject(new Example1())).to.not.throwException();
+		expect(unlessObject(new Example1(), Example1)).to.not.throwException();
+
+		expect(unlessObject(null, Example1)).to.throwException(/Expected variable to be object, but was null/);
+		expect(unlessObject(new Example1(), Example2)).to.throwException(/Expected object to be (Example2 instance|a specific type)(, but was Example1)?/);
+		expect(unlessObject(new Anon(), Example2)).to.throwException(/Expected object to be (Example2 instance|a specific type)/);
+		expect(unlessObject(new NoConstructor(), Example2)).to.throwException(/Expected object to be (Example2 instance|a specific type)/);
+		expect(unlessObject(new Example1(), Example2, "name")).to.throwException(/Expected object \[name\] to be (Example2 instance|a specific type)/);
+
+		if (Object.create) {    // don't run this test on IE 8
+			expect(unlessObject(Object.create(null), Example2)).to.throwException(/Expected object to be (Example2 instance|a specific type), but it has no prototype/);
+		}
 	});
 
 	it("checks if condition is true", function() {
