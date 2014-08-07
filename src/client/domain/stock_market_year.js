@@ -48,6 +48,8 @@ StockMarketYear.prototype.totalSellOrders = function totalSellOrders() {
 };
 
 StockMarketYear.prototype.sell = function sell(dollars) {
+	failFast.unlessObject(dollars, Dollars, "dollars");
+
 	this._totalSellOrders = this._totalSellOrders.plus(dollars);
 };
 
