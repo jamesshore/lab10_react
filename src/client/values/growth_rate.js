@@ -2,6 +2,7 @@
 "use strict";
 
 var failFast = require("../util/fail_fast.js");
+var Dollars = require("./dollars.js");
 
 var GrowthRate = module.exports = function GrowthRate(rateAsPercentage) {
 	failFast.unlessNumber(rateAsPercentage, "rateAsPercentage");
@@ -11,7 +12,7 @@ var GrowthRate = module.exports = function GrowthRate(rateAsPercentage) {
 };
 
 GrowthRate.prototype.growthFor = function growthFor(dollars) {
-	failFast.unlessObject(dollars);
+	failFast.unlessObject(dollars, Dollars, "dollars");
 
 	return dollars.percentage(this._rate);
 };

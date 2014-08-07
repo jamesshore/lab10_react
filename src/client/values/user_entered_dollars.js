@@ -2,6 +2,7 @@
 "use strict";
 
 var failFast = require("../util/fail_fast.js");
+var Dollars = require("./dollars.js");
 var ValidDollars = require("./valid_dollars.js");
 var InvalidDollars = require("./invalid_dollars.js");
 
@@ -10,6 +11,7 @@ var UserEnteredDollars = module.exports = function UserEnteredDollars(text) {
 
 	this._backingDollars = parse(text);
 };
+Dollars.extend(UserEnteredDollars);
 
 UserEnteredDollars.prototype.isValid = function isValid() {
 	return this._backingDollars.isValid();

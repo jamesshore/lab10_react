@@ -2,6 +2,7 @@
 "use strict";
 
 var failFast = require("../util/fail_fast.js");
+var Dollars = require("./dollars.js");
 var InvalidDollars = require("./invalid_dollars.js");
 
 var ValidDollars = module.exports = function ValidDollars(amount) {
@@ -10,6 +11,7 @@ var ValidDollars = module.exports = function ValidDollars(amount) {
 
 	this._amount = amount;
 };
+Dollars.extend(ValidDollars);
 
 ValidDollars.MAX_VALUE = 1000000000;
 ValidDollars.MIN_VALUE = -1000000000;
