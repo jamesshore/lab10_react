@@ -8,14 +8,16 @@ var InvalidDollars = require("../values/invalid_dollars.js");
 
 var StockMarketTableRow = React.createClass({
   render: function() {
-    return <tr>
-	    <StockMarketTableCell value={this.props.year} />
-	    <StockMarketTableCell value={new InvalidDollars()} />
-	    <StockMarketTableCell value={new ValidDollars(7000)} />
-	    <StockMarketTableCell value={new ValidDollars(-695)} />
-	    <StockMarketTableCell value={new ValidDollars(-232)} />
-	    <StockMarketTableCell value={new ValidDollars(9905)} />
-	    <StockMarketTableCell value={new ValidDollars(108981)} />
+		var year = this.props.stockMarketYear;
+
+	  return <tr>
+	    <StockMarketTableCell value={year.year()} />
+	    <StockMarketTableCell value={year.startingBalance()} />
+	    <StockMarketTableCell value={year.startingCostBasis()} />
+	    <StockMarketTableCell value={year.totalSellOrders()} />
+	    <StockMarketTableCell value={year.capitalGainsTaxIncurred()} />
+	    <StockMarketTableCell value={year.growth()} />
+	    <StockMarketTableCell value={year.endingBalance()} />
     </tr>;
   }
 });
