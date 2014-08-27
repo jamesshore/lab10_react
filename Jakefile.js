@@ -54,7 +54,14 @@
 	task("build", [ DEPLOY_DIR, "browserify" ], function() {
 		console.log("Building deploy dir: .");
 		shell.rm("-rf", DEPLOY_DIR + "/*");
-		shell.cp("-R", CLIENT_DIR + "/*.html", CLIENT_DIR + "/*.css", BROWSERIFY_DIR + "/*", VENDOR_DIR, DEPLOY_DIR);
+		shell.cp("-R",
+				CLIENT_DIR + "/*.html",
+				CLIENT_DIR + "/*.css",
+				CLIENT_DIR + "/*.png",
+				BROWSERIFY_DIR + "/*",
+				VENDOR_DIR,
+			DEPLOY_DIR
+		);
 	});
 
 	desc("Lint everything");
@@ -183,6 +190,7 @@
 		var globals = globalLintGlobals();
 
 		// Karma
+		globals.console = false;
 		globals.dump = false;
 
 		// CommonJS

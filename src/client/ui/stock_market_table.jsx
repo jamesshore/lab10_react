@@ -3,6 +3,7 @@
 "use strict";
 
 var StockMarketRow = require("./stock_market_table_row.js");
+var Year = require("../values/year.js");
 
 var StockMarketTable = React.createClass({
   render: function() {
@@ -19,10 +20,10 @@ var StockMarketTable = React.createClass({
         </tr>
       </thead>
       <tbody>
-        <StockMarketRow year="2010" />
-        <StockMarketRow year="2011" />
-        <StockMarketRow year="2012" />
-        <StockMarketRow year="2013" />
+        <StockMarketRow year={new Year(2010)} />
+        <StockMarketRow year={new Year(2011)} />
+        <StockMarketRow year={new Year(2012)} />
+        <StockMarketRow year={new Year(2013)} />
       </tbody>
     </table>;
   }

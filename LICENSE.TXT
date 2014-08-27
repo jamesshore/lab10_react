@@ -19,3 +19,12 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
+
+
+Icons
+-----
+The invalid_dollars.png icon the client/ folder is Copyright Yusuke Kamiyamane. All rights reserved.
+Licensed under a Creative Commons Attribution 3.0 license.
+
+Find the icons at http://p.yusukekamiyamane.com/.
+Used in this application: the 16x16 050.png icon from the Diagona Icons set.
