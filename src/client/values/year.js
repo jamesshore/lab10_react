@@ -22,3 +22,11 @@ Year.prototype.numberOfYearsInclusive = function numberOfYearsInclusive(endingYe
 Year.prototype.toString = function toString() {
 	return this._year + "";
 };
+
+Year.prototype.renderTo = function renderTo(target) {
+	target.render({
+		text: this.toString(),
+		negative: false,
+		invalid: false
+	});
+};
