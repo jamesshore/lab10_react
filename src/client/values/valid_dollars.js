@@ -64,8 +64,11 @@ ValidDollars.prototype.toString = function toString() {
 };
 
 ValidDollars.prototype.renderTo = function renderTo(target) {
-	target.setText(this.toString());
-	if (this._amount <= -0.5) target.setNegative();
+	target.render({
+		text: this.toString(),
+		negative: (this._amount <= -0.5),
+		invalid: false
+	});
 };
 
 function absoluteValueString(amount) {

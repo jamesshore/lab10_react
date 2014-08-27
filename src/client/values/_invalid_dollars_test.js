@@ -59,24 +59,20 @@ describe("InvalidDollars", function() {
 
 
 	describe("rendering", function() {
-		var target = new __RenderTargetStub();
+		var target;
 
 		beforeEach(function() {
-			target.reset();
+			target = new __RenderTargetStub();
 			invalid.renderTo(target);
 		});
 
-		it("has no text", function() {
-			expect(target.text).to.equal(undefined);
-		});
-
-		it("is never negative", function() {
-			expect(target.negative).to.equal(false);
-		});
-
 		it("is always invalid", function() {
-			expect(target.invalid).to.equal(true);
-			expect(target.tooltip).to.equal("Invalid dollar amount");
+			expect(target.rendering).to.eql({
+				text: "$???",
+				negative: false,
+				invalid: true,
+				tooltip: "Invalid dollar amount"
+			});
 		});
 	});
 

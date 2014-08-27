@@ -97,43 +97,40 @@ describe("ValidDollars", function() {
 
 
 	describe("rendering", function() {
-		var target = new __RenderTargetStub();
+		var target;
 
 		beforeEach(function() {
-			target.reset();
+			target = new __RenderTargetStub();
 		});
 
 		it("converts to string", function() {
 			_20.renderTo(target);
-			expect(target.text).to.equal(_20.toString());
+			expect(target.rendering.text).to.equal(_20.toString());
 		});
 
 		it("handles sign", function() {
 			_20.renderTo(target);
-			expect(target.negative).to.be(false);
+			expect(target.rendering.negative).to.be(false);
 
-			target.reset();
 			_minus20.renderTo(target);
-			expect(target.negative).to.be(true);
+			expect(target.rendering.negative).to.be(true);
 		});
 
 		it("treats zero, and negative values that round up to zero, as positive", function() {
 			_0.renderTo(target);
-			expect(target.negative).to.be(false);
+			expect(target.rendering.negative).to.be(false);
 
-			target.reset();
 			new ValidDollars(-0.49).renderTo(target);
-			expect(target.negative).to.be(false);
+			expect(target.rendering.negative).to.be(false);
 
-			target.reset();
 			new ValidDollars(-0.5).renderTo(target);
-			expect(target.negative).to.be(true);
+			expect(target.rendering.negative).to.be(true);
 		});
 
 		it("is never invalid", function() {
 			_20.renderTo(target);
-			expect(target.invalid).to.be(false);
-			expect(target.tooltip).to.be(undefined);
+			expect(target.rendering.invalid).to.be(false);
+			expect(target.rendering.tooltip).to.be(undefined);
 		});
 	});
 

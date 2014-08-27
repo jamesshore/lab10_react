@@ -3,7 +3,7 @@
 
 var failFast = require("../util/fail_fast.js");
 
-// This is a pure superclass. It's used for type checking purposes
+// This is a pure superclass. It's used for type checking purposes.
 var Dollars = module.exports = function Dollars() {
 	failFast.unreachable("Do not construct Dollars directly; construct one of its subclasses instead");
 };

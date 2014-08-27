@@ -33,5 +33,10 @@ InvalidDollars.prototype.toString = function toString() {
 };
 
 InvalidDollars.prototype.renderTo = function renderTo(target) {
-	target.setInvalid("Invalid dollar amount");
+	target.render({
+		text: "$???",
+		negative: false,
+		invalid: true,
+		tooltip: "Invalid dollar amount"
+	});
 };
