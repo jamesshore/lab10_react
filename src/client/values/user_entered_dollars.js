@@ -55,7 +55,13 @@ UserEnteredDollars.prototype.toString = function toString() {
 };
 
 UserEnteredDollars.prototype.renderTo = function renderTo(target) {
-	this._backingDollars.renderTo(target);
+	var self = this;
+	this._backingDollars.renderTo({
+		render: function render(rendering) {
+			rendering.text = self._userText;
+			target.render(rendering);
+		}
+	});
 };
 
 
