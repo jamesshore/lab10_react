@@ -50,6 +50,11 @@
 		karma.serve(complete, fail);
 	}, {async: true});
 
+	desc("Start HTTP server for manual testing");
+	task("run", ["build"], function() {
+		jake.exec("node ./node_modules/http-server/bin/http-server ./generated/deploy", { interactive: true }, complete);
+	}, {async: true});
+
 	desc("Create deployable client files");
 	task("build", [ DEPLOY_DIR, "browserify" ], function() {
 		console.log("Building deploy dir: .");
