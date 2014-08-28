@@ -8,9 +8,18 @@ var UserEnteredDollars = require("../values/user_entered_dollars.js");
 var ConfigurationPanel = module.exports = React.createClass({
   render: function render() {
     return <div className="config">
-      <ConfigurationField name="Starting Balance" initialValue={new UserEnteredDollars("123")} />
-      <ConfigurationField name="Cost Basis" initialValue={new UserEnteredDollars("456")} />
-      <ConfigurationField name="Yearly Spending" initialValue={new UserEnteredDollars("789")} />
+      <ConfigurationField
+        name="Starting Balance"
+        initialValue={this.props.userConfiguration.getStartingBalance()}
+      />
+      <ConfigurationField
+        name="Cost Basis"
+        initialValue={this.props.userConfiguration.getStartingCostBasis()}
+      />
+      <ConfigurationField
+        name="Yearly Spending"
+        initialValue={this.props.userConfiguration.getYearlySpending()}
+      />
     </div>;
   }
 });
