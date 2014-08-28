@@ -19,6 +19,7 @@ var CAPITAL_GAINS_TAX_RATE = new TaxRate(25);
 describe("StockMarketTableRow", function() {
 	var cells;
 	var year = new StockMarketYear(YEAR, STARTING_BALANCE, STARTING_COST_BASIS, INTEREST_RATE, CAPITAL_GAINS_TAX_RATE);
+	year.sell(new ValidDollars(36));
 
 	it("renders columns", function() {
 		var table = TestUtils.renderIntoDocument(
@@ -31,8 +32,8 @@ describe("StockMarketTableRow", function() {
 		expect(textOf(cells[0])).to.equal(year.year().toString());
 		expect(textOf(cells[1])).to.equal(year.startingBalance().toString());
 		expect(textOf(cells[2])).to.equal(year.startingCostBasis().toString());
-		expect(textOf(cells[3])).to.equal(year.totalSellOrders().toString());
-		expect(textOf(cells[4])).to.equal(year.capitalGainsTaxIncurred().toString());
+		expect(textOf(cells[3])).to.equal(year.totalSellOrders().flipSign().toString());
+		expect(textOf(cells[4])).to.equal(year.capitalGainsTaxIncurred().flipSign().toString());
 		expect(textOf(cells[5])).to.equal(year.growth().toString());
 		expect(textOf(cells[6])).to.equal(year.endingBalance().toString());
 	});

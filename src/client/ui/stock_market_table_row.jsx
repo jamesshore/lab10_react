@@ -12,8 +12,8 @@ var StockMarketTableRow = React.createClass({
 	    <StockMarketTableCell value={year.year()} />
 	    <StockMarketTableCell value={year.startingBalance()} />
 	    <StockMarketTableCell value={year.startingCostBasis()} />
-	    <StockMarketTableCell value={year.totalSellOrders()} />
-	    <StockMarketTableCell value={year.capitalGainsTaxIncurred()} />
+	    <StockMarketTableCell value={year.totalSellOrders().flipSign()} />
+	    <StockMarketTableCell value={year.capitalGainsTaxIncurred().flipSign()} />
 	    <StockMarketTableCell value={year.growth()} />
 	    <StockMarketTableCell value={year.endingBalance()} />
     </tr>;
