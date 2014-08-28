@@ -23,7 +23,7 @@ var ENDING_YEAR = new Year(2050);
 var YEARLY_SPENDING = new ValidDollars(36);
 
 
-var ApplicationUi = React.createClass({
+var ApplicationUi = module.exports = React.createClass({
   render: function() {
 	  var firstYear = new StockMarketYear(STARTING_YEAR, STARTING_BALANCE, STARTING_COST_BASIS, INTEREST_RATE, CAPITAL_GAINS_TAX_RATE);
 		var projection = new StockMarketProjection(firstYear, ENDING_YEAR, YEARLY_SPENDING);
@@ -42,5 +42,3 @@ var ApplicationUi = React.createClass({
     </div>;
   }
 });
-
-module.exports = ApplicationUi;

@@ -2,7 +2,7 @@
 // Copyright (c) 2014 Titanium I.T. LLC. All rights reserved. For license, see "README" or "LICENSE" file.
 "use strict";
 
-var StockMarketTableCell = React.createClass({
+var StockMarketTableCell = module.exports = React.createClass({
   render: function() {
 	  var value = this.props.value;
 
@@ -27,5 +27,3 @@ RenderTarget.prototype.createComponent = function createComponent() {
 		return <td className={negativeClass} >{this._rendering.text}</td>;
 	}
 };
-
-module.exports = StockMarketTableCell;
