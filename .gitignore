@@ -1,9 +1,9 @@
 .DS_Store
 .idea/workspace.xml
 .bin
-generated
-node_modules/karma/node_modules/chokidar/node_modules/fsevents/build/
+generated/
+
+node_modules/karma/node_modules/chokidar/node_modules/fsevents/
 node_modules/karma/node_modules/socket.io/node_modules/socket.io-client/lib/vendor/web-socket-js/flash-src/com/hurlant/crypto/rsa/
 node_modules/karma/node_modules/socket.io/node_modules/socket.io-client/node_modules/ws/build/
 node_modules/karma/node_modules/socket.io/node_modules/socket.io-client/node_modules/ws/builderror.log
-node_modules/gaze/build/
