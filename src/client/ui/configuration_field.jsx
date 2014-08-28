@@ -35,6 +35,6 @@ RenderTarget.prototype.createComponent = function createComponent(self, userText
 
 	return <div>
 		<label>{self.props.name}: </label>
-		<input type="text" className={invalidClass} value={userText} onChange={self.handleChange} />
+		<input type="text" className={invalidClass} title={this._rendering.tooltip} value={userText} onChange={self.handleChange} />
 	</div>;
 };

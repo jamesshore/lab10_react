@@ -35,7 +35,9 @@ describe("ConfigurationField", function() {
 		var field = <ConfigurationField name="Example" initialValue={new UserEnteredDollars("xxx")} />;
 		var input = TestUtils.findRenderedDOMComponentWithTag(TestUtils.renderIntoDocument(field), "input");
 
-		expect(input.getDOMNode().className).to.equal("invalid");
+		var inputNode = input.getDOMNode();
+		expect(inputNode.className).to.equal("invalid");
+		expect(inputNode.title).to.equal("Invalid dollar amount");
 	});
 
 	function textOf(domNode) {
