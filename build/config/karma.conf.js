@@ -25,7 +25,7 @@ module.exports = function(config) {
 
     // list of files to exclude
     exclude: [
-      
+      'generated/client/main.js'
     ],
 
 	  // preprocesors
