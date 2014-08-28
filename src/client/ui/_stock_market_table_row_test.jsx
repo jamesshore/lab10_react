@@ -16,7 +16,7 @@ var STARTING_COST_BASIS = new ValidDollars(3000);
 var INTEREST_RATE = new GrowthRate(10);
 var CAPITAL_GAINS_TAX_RATE = new TaxRate(25);
 
-describe("StockMarket Table Row", function() {
+describe("StockMarketTableRow", function() {
 	var cells;
 	var year = new StockMarketYear(YEAR, STARTING_BALANCE, STARTING_COST_BASIS, INTEREST_RATE, CAPITAL_GAINS_TAX_RATE);
 

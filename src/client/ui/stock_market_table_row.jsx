@@ -3,8 +3,6 @@
 "use strict";
 
 var StockMarketTableCell = require("./stock_market_table_cell.js");
-var ValidDollars = require("../values/valid_dollars.js");
-var InvalidDollars = require("../values/invalid_dollars.js");
 
 var StockMarketTableRow = React.createClass({
   render: function() {
