@@ -23,6 +23,15 @@ describe("ConfigurationField", function() {
 		expect(input.getDOMNode().className).to.equal("");
 	});
 
+	it("sets 'invalid' class when user enters invalid value", function() {
+		var field = <ConfigurationField name="Example" initialValue={new UserEnteredDollars("xxx")} />;
+		var input = TestUtils.findRenderedDOMComponentWithTag(TestUtils.renderIntoDocument(field), "input");
+
+		var inputNode = input.getDOMNode();
+		expect(inputNode.className).to.equal("invalid");
+		expect(inputNode.title).to.equal("Invalid dollar amount");
+	});
+
 	it("value changes when user changes the input field", function() {
 		var field = <ConfigurationField name="Example" initialValue={new UserEnteredDollars("123")} />;
 		var input = TestUtils.findRenderedDOMComponentWithTag(TestUtils.renderIntoDocument(field), "input");
@@ -31,13 +40,22 @@ describe("ConfigurationField", function() {
 		expect(input.getDOMNode().value).to.equal("foo");
 	});
 
-	it("sets 'invalid' class when user enters invalid value", function() {
-		var field = <ConfigurationField name="Example" initialValue={new UserEnteredDollars("xxx")} />;
+	it("calls event handler when user changes input field", function() {
+		var eventTriggered = null;
+
+		var field = <ConfigurationField
+			name="example"
+			initialValue={new UserEnteredDollars("123")}
+			onChange={handler}
+		/>;
 		var input = TestUtils.findRenderedDOMComponentWithTag(TestUtils.renderIntoDocument(field), "input");
 
-		var inputNode = input.getDOMNode();
-		expect(inputNode.className).to.equal("invalid");
-		expect(inputNode.title).to.equal("Invalid dollar amount");
+		TestUtils.Simulate.change(input, { target: { value: "foo" } });
+		expect(eventTriggered).to.be("foo");
+
+		function handler(value) {
+			eventTriggered = value;
+		}
 	});
 
 	function textOf(domNode) {

@@ -15,6 +15,7 @@ var ConfigurationField = module.exports = React.createClass({
 		this.setState({
 			value: new UserEnteredDollars(event.target.value)
 		});
+		if (this.props.onChange) this.props.onChange(event.target.value);
 	},
 
   render: function render() {
