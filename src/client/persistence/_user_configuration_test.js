@@ -30,12 +30,6 @@ describe("UserConfiguration", function() {
 			});
 		});
 
-		it("only supports one observer (for now)", function() {
-			expect(function() {
-				config.onChange(function() {});
-			}).to.throwException();
-		});
-
 		it("triggers when starting balance changes", function() {
 			config.setStartingBalance(newValue);
 			expect(eventTriggered).to.be(true);
@@ -52,6 +46,16 @@ describe("UserConfiguration", function() {
 			config.setYearlySpending(newValue);
 			expect(eventTriggered).to.be(true);
 			expect(config.getYearlySpending()).to.equal(newValue);
+		});
+
+		it("supports multiple observers", function() {
+			var secondHandlerTriggered = false;
+			config.onChange(function() {
+				secondHandlerTriggered = true;
+			});
+
+			config.setStartingBalance(newValue);
+			expect(secondHandlerTriggered).to.be(true);
 		});
 	});
 

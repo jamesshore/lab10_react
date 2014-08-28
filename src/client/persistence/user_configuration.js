@@ -6,6 +6,7 @@ var Dollars = require("../values/dollars.js");
 var UserEnteredDollars = require("../values/user_entered_dollars.js");
 
 var UserConfiguration = module.exports = function UserConfiguration() {
+	this._changeHandlers = [];
 	this._startingBalance = UserConfiguration.DEFAULT_STARTING_BALANCE;
 	this._startingCostBasis = UserConfiguration.DEFAULT_STARTING_COST_BASIS;
 	this._yearlySpending = UserConfiguration.DEFAULT_YEARLY_SPENDING;
@@ -49,10 +50,11 @@ UserConfiguration.prototype.setYearlySpending = function setYearlySpending(dolla
 };
 
 UserConfiguration.prototype.onChange = function onChange(callback) {
-	failFast.unlessTrue(this._changeHandler === undefined, "Support for multiple observers isn't implemented yet");
-	this._changeHandler = callback;
+	this._changeHandlers.push(callback);
 };
 
 function triggerChangeEvent(self) {
-	if (self._changeHandler) self._changeHandler(self);
+	self._changeHandlers.forEach(function(handler) {
+		handler(self);
+	});
 }
