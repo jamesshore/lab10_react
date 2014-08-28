@@ -9,6 +9,7 @@ var InvalidDollars = require("./invalid_dollars.js");
 var UserEnteredDollars = module.exports = function UserEnteredDollars(text) {
 	failFast.unlessString(text, "text");
 
+	this._userText = text;
 	this._backingDollars = parse(text);
 };
 Dollars.extend(UserEnteredDollars);
@@ -43,6 +44,10 @@ UserEnteredDollars.prototype.percentage = function percentage(percent) {
 
 UserEnteredDollars.prototype.min = function min(operand) {
 	return this._backingDollars.min(operand);
+};
+
+UserEnteredDollars.prototype.getUserText = function getUserText() {
+	return this._userText;
 };
 
 UserEnteredDollars.prototype.toString = function toString() {

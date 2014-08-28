@@ -124,6 +124,10 @@ describe("UserEnteredDollars", function() {
 
 
 	describe("rendering", function() {
+		it("remembers user's exact text", function() {
+			expect(new UserEnteredDollars("   x y z  ").getUserText()).to.equal("   x y z  ");
+		});
+
 		it("uses backing data type", function() {
 			var userTarget = new __RenderTargetStub();
 			var numberTarget = new __RenderTargetStub();
