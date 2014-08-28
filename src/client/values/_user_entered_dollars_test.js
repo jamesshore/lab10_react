@@ -124,15 +124,17 @@ describe("UserEnteredDollars", function() {
 
 
 	describe("rendering", function() {
-		it("uses backing data type, but keeps user's exact text", function() {
-			var actualTarget = new __RenderTargetStub();
-			var expectedTarget = new __RenderTargetStub();
+		it("remembers user's exact text", function() {
+			expect(new UserEnteredDollars("   x y z  ").getUserText()).to.equal("   x y z  ");
+		});
 
-			valid.renderTo(actualTarget);
-			_10.renderTo(expectedTarget);
-			expectedTarget.rendering.text = "10";
+		it("uses backing data type", function() {
+			var userTarget = new __RenderTargetStub();
+			var numberTarget = new __RenderTargetStub();
 
-			expect(actualTarget.rendering).to.eql(expectedTarget.rendering);
+			valid.renderTo(userTarget);
+			_10.renderTo(numberTarget);
+			expect(userTarget).to.eql(numberTarget);
 		});
 	});
 
