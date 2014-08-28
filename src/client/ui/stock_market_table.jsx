@@ -5,7 +5,7 @@
 var StockMarketRow = require("./stock_market_table_row.js");
 
 var StockMarketTable = module.exports = React.createClass({
-  render: function() {
+  render: function render() {
 		var projection = this.props.stockMarketProjection;
 	  var year;
 

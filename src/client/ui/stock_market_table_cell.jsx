@@ -3,7 +3,7 @@
 "use strict";
 
 var StockMarketTableCell = module.exports = React.createClass({
-  render: function() {
+  render: function render() {
 	  var value = this.props.value;
 
 	  var target = new RenderTarget();
