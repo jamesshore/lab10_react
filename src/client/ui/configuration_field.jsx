@@ -20,7 +20,7 @@ var ConfigurationField = module.exports = React.createClass({
   render: function render() {
 	  var target = new RenderTarget();
 	  this.state.value.renderTo(target);
-	  return target.createComponent(this, this.state.value.getUserText());
+	  return target.createComponent(this);
   }
 });
 
@@ -31,10 +31,13 @@ RenderTarget.prototype.render = function render(values) {
 };
 
 RenderTarget.prototype.createComponent = function createComponent(self, userText) {
-	var invalidClass = this._rendering.invalid? "invalid" : null;
-
 	return <div>
 		<label>{self.props.name}: </label>
-		<input type="text" className={invalidClass} title={this._rendering.tooltip} value={userText} onChange={self.handleChange} />
+		<input type="text"
+			className={this._rendering.invalid? "invalid" : null}
+			title={this._rendering.tooltip}
+			value={this._rendering.text}
+			onChange={self.handleChange}
+		/>
 	</div>;
 };
