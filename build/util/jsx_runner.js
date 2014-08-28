@@ -27,7 +27,6 @@ function transformOneFile(inFilename, outFilename, options) {
 		return true;
 	}
 	catch(error) {
-		console.log(error);
 		console.log("\n" + inFilename + " failed");
 		console.log("line " + error.lineNumber + ", col " + error.column + ": " + error.description);
 		return false;
