@@ -2,7 +2,7 @@
 // Copyright (c) 2014 Titanium I.T. LLC. All rights reserved. For license, see "README" or "LICENSE" file.
 "use strict";
 
-var ConfigurationField = module.exports = React.createClass({
+var ConfigurationField = React.createClass({
   render: function() {
     return <div>
       <label>{this.props.name}: </label><input type="text" />
@@ -10,7 +10,7 @@ var ConfigurationField = module.exports = React.createClass({
   }
 });
 
-var ConfigurationPanel = React.createClass({
+var ConfigurationPanel = module.exports = React.createClass({
   render: function() {
     return <div className="config">
       <ConfigurationField name="Starting Balance" />
