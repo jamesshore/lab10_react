@@ -15,8 +15,8 @@ var ConfigurationField = module.exports = React.createClass({
 
   render: function render() {
 	  var target = new RenderTarget();
-	  this.props.initialValue.renderTo(target);
-	  return target.createComponent(this, this.props.initialValue.getUserText());
+	  this.props.value.renderTo(target);
+	  return target.createComponent(this, this.props.value.getUserText());
   }
 });
 

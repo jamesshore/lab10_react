@@ -14,17 +14,17 @@ var ConfigurationPanel = module.exports = React.createClass({
     return <div className="config">
       <ConfigurationField
         name="Starting Balance"
-        initialValue={this.props.userConfiguration.getStartingBalance()}
+        value={this.props.userConfiguration.getStartingBalance()}
 	      onChange={this.handleChange.bind(this, this.props.userConfiguration.setStartingBalance)}
       />
       <ConfigurationField
         name="Cost Basis"
-        initialValue={this.props.userConfiguration.getStartingCostBasis()}
+        value={this.props.userConfiguration.getStartingCostBasis()}
 	      onChange={this.handleChange.bind(this, this.props.userConfiguration.setStartingCostBasis)}
       />
       <ConfigurationField
         name="Yearly Spending"
-        initialValue={this.props.userConfiguration.getYearlySpending()}
+        value={this.props.userConfiguration.getYearlySpending()}
 	      onChange={this.handleChange.bind(this, this.props.userConfiguration.setYearlySpending)}
       />
     </div>;

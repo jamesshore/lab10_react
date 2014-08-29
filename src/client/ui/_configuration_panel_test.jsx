@@ -21,11 +21,11 @@ describe("ConfigurationPanel", function() {
 
 	it("initializes configuration fields from user configuration", function() {
 		checkComponent(fields[0],
-			<ConfigurationField name="Starting Balance" initialValue={UserConfiguration.DEFAULT_STARTING_BALANCE} />);
+			<ConfigurationField name="Starting Balance" value={UserConfiguration.DEFAULT_STARTING_BALANCE} />);
 		checkComponent(fields[1],
-			<ConfigurationField name="Cost Basis" initialValue={UserConfiguration.DEFAULT_STARTING_COST_BASIS} />);
+			<ConfigurationField name="Cost Basis" value={UserConfiguration.DEFAULT_STARTING_COST_BASIS} />);
 		checkComponent(fields[2],
-			<ConfigurationField name="Yearly Spending" initialValue={UserConfiguration.DEFAULT_YEARLY_SPENDING} />);
+			<ConfigurationField name="Yearly Spending" value={UserConfiguration.DEFAULT_YEARLY_SPENDING} />);
 	});
 
 	it("changes to configuration fields are applied to user configuration", function() {

@@ -14,7 +14,7 @@ describe("ConfigurationField", function() {
 	beforeEach(function() {
 		field = TestUtils.renderIntoDocument(<ConfigurationField
 			name="Example"
-			initialValue={new UserEnteredDollars("123")}
+			value={new UserEnteredDollars("123")}
 			onChange={changeHandler}
 		/>);
 
@@ -33,7 +33,7 @@ describe("ConfigurationField", function() {
 	});
 
 	it("sets 'invalid' class when user enters invalid value", function() {
-		var component = <ConfigurationField name="Example" initialValue={new UserEnteredDollars("xxx")} />;
+		var component = <ConfigurationField name="Example" value={new UserEnteredDollars("xxx")} />;
 		field = TestUtils.renderIntoDocument(component);
 
 		expect(input().className).to.equal("invalid");
