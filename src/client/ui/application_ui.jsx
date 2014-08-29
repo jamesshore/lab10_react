@@ -18,7 +18,7 @@ var ApplicationUi = module.exports = React.createClass({
 
 	getInitialState: function() {
 		return {
-			config: this.props.userConfiguration || new UserConfiguration()
+			config: this.props.initialConfiguration || new UserConfiguration()
 		};
 	},
 

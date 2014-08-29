@@ -19,7 +19,7 @@ describe("ApplicationUi", function() {
 	beforeEach(function() {
 		config = new UserConfiguration();
 		config.setStartingBalance(new UserEnteredDollars("13821"));
-		app = TestUtils.renderIntoDocument(<ApplicationUi userConfiguration={config} />);
+		app = TestUtils.renderIntoDocument(<ApplicationUi initialConfiguration={config} />);
 	});
 
 	it("renders configuration panel with user configuration", function() {
