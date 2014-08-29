@@ -40,11 +40,6 @@ describe("ConfigurationField", function() {
 		expect(input().title).to.equal("Invalid dollar amount");
 	});
 
-	it("value changes when user changes the input field", function() {
-		TestUtils.Simulate.change(input(), { target: { value: "foo" } });
-		expect(input().value).to.equal("foo");
-	});
-
 	describe("events", function() {
 
 		it("calls event handler when user changes input field", function() {

@@ -5,27 +5,18 @@
 var UserEnteredDollars = require("../values/user_entered_dollars.js");
 
 var ConfigurationField = module.exports = React.createClass({
-	getInitialState: function getInitialState() {
-		return {
-			value: this.props.initialValue
-		};
-	},
-
 	simulateChange: function simulateChange(value) {
 		this.handleChange({ target: { value: value }});
 	},
 
 	handleChange: function handleChange(event) {
-		this.setState({
-			value: new UserEnteredDollars(event.target.value)
-		});
 		this.props.onChange(event.target.value);
 	},
 
   render: function render() {
 	  var target = new RenderTarget();
-	  this.state.value.renderTo(target);
-	  return target.createComponent(this, this.state.value.getUserText());
+	  this.props.initialValue.renderTo(target);
+	  return target.createComponent(this, this.props.initialValue.getUserText());
   }
 });
 
