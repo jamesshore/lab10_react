@@ -14,6 +14,10 @@ var UserConfiguration = module.exports = function UserConfiguration() {
 	this._startingBalance = UserConfiguration.DEFAULT_STARTING_BALANCE;
 	this._startingCostBasis = UserConfiguration.DEFAULT_STARTING_COST_BASIS;
 	this._yearlySpending = UserConfiguration.DEFAULT_YEARLY_SPENDING;
+
+//	setInterval(function() {
+//		this.setYearlySpending(new UserEnteredDollars(this._yearlySpending.plus(new ValidDollars(1)).toString()));
+//	}.bind(this), 500)
 };
 
 UserConfiguration.DEFAULT_STARTING_BALANCE = new UserEnteredDollars("10000");
