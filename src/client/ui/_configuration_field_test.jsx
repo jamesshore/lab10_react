@@ -8,58 +8,67 @@ var UserEnteredDollars = require("../values/user_entered_dollars.js");
 
 describe("ConfigurationField", function() {
 
-	it("displays label", function() {
-		var field = <ConfigurationField name="Example" initialValue={new UserEnteredDollars("123")} />;
-		var label = TestUtils.findRenderedDOMComponentWithTag(TestUtils.renderIntoDocument(field), "label");
+	var field;
+	var eventTriggered;
 
-		expect(textOf(label.getDOMNode())).to.equal("Example: ");
+	beforeEach(function() {
+		field = TestUtils.renderIntoDocument(<ConfigurationField
+			name="Example"
+			initialValue={new UserEnteredDollars("123")}
+			onChange={changeHandler}
+		/>);
+
+		function changeHandler(newValue) {
+			eventTriggered = newValue;
+		}
+	});
+
+	it("displays label", function() {
+		expect(textOf(label())).to.equal("Example: ");
 	});
 
 	it("displays initial value", function() {
-		var field = <ConfigurationField name="Example" initialValue={new UserEnteredDollars("123")} />;
-		var input = TestUtils.findRenderedDOMComponentWithTag(TestUtils.renderIntoDocument(field), "input");
-
-		expect(input.getDOMNode().value).to.equal("123");
-		expect(input.getDOMNode().className).to.equal("");
+		expect(input().value).to.equal("123");
+		expect(input().className).to.equal("");
 	});
 
 	it("sets 'invalid' class when user enters invalid value", function() {
-		var field = <ConfigurationField name="Example" initialValue={new UserEnteredDollars("xxx")} />;
-		var input = TestUtils.findRenderedDOMComponentWithTag(TestUtils.renderIntoDocument(field), "input");
+		var component = <ConfigurationField name="Example" initialValue={new UserEnteredDollars("xxx")} />;
+		field = TestUtils.renderIntoDocument(component);
 
-		var inputNode = input.getDOMNode();
-		expect(inputNode.className).to.equal("invalid");
-		expect(inputNode.title).to.equal("Invalid dollar amount");
+		expect(input().className).to.equal("invalid");
+		expect(input().title).to.equal("Invalid dollar amount");
 	});
 
 	it("value changes when user changes the input field", function() {
-		var field = <ConfigurationField name="Example" initialValue={new UserEnteredDollars("123")} />;
-		var input = TestUtils.findRenderedDOMComponentWithTag(TestUtils.renderIntoDocument(field), "input");
-
-		TestUtils.Simulate.change(input, { target: { value: "foo" } });
-		expect(input.getDOMNode().value).to.equal("foo");
+		TestUtils.Simulate.change(input(), { target: { value: "foo" } });
+		expect(input().value).to.equal("foo");
 	});
 
-	it("calls event handler when user changes input field", function() {
-		var eventTriggered = null;
+	describe("events", function() {
 
-		var field = <ConfigurationField
-			name="example"
-			initialValue={new UserEnteredDollars("123")}
-			onChange={handler}
-		/>;
-		var input = TestUtils.findRenderedDOMComponentWithTag(TestUtils.renderIntoDocument(field), "input");
+		it("calls event handler when user changes input field", function() {
+			TestUtils.Simulate.change(input(), { target: { value: "foo" } });
+			expect(eventTriggered).to.be("foo");
+		});
 
-		TestUtils.Simulate.change(input, { target: { value: "foo" } });
-		expect(eventTriggered).to.be("foo");
-
-		function handler(value) {
-			eventTriggered = value;
-		}
+		it("enables tests to simulate changes", function() {
+			field.simulateChange("bar");
+			expect(eventTriggered).to.be("bar");
+		});
 	});
+
+	function label() {
+		return TestUtils.findRenderedDOMComponentWithTag(field, "label").getDOMNode();
+	}
+
+	function input() {
+		return TestUtils.findRenderedDOMComponentWithTag(field, "input").getDOMNode();
+	}
 
 	function textOf(domNode) {
 		if (domNode.textContent) return domNode.textContent;
 		else return domNode.innerText;
 	}
+
 });

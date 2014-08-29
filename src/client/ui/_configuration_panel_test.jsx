@@ -10,12 +10,16 @@ var UserEnteredDollars = require("../values/user_entered_dollars.js");
 
 describe("ConfigurationPanel", function() {
 
-	it("initializes configuration fields from user configuration", function() {
-		var config = new UserConfiguration();
+	var config;
+	var fields;
 
+	beforeEach(function() {
+		config = new UserConfiguration();
 		var panel = TestUtils.renderIntoDocument(<ConfigurationPanel userConfiguration={config} />);
-		var fields = TestUtils.scryRenderedComponentsWithType(panel, ConfigurationField);
+		fields = TestUtils.scryRenderedComponentsWithType(panel, ConfigurationField);
+	});
 
+	it("initializes configuration fields from user configuration", function() {
 		checkComponent(fields[0],
 			<ConfigurationField name="Starting Balance" initialValue={UserConfiguration.DEFAULT_STARTING_BALANCE} />);
 		checkComponent(fields[1],
@@ -23,6 +27,11 @@ describe("ConfigurationPanel", function() {
 		checkComponent(fields[2],
 			<ConfigurationField name="Yearly Spending" initialValue={UserConfiguration.DEFAULT_YEARLY_SPENDING} />);
 	});
+
+//	it("changes to configuration fields are applied to user configuration", function() {
+//		fields[0].simulateChange("new balance");
+//		expect(config.getStartingBalance()).to.equal(new UserEnteredDollars("new balance"));
+//	});
 
 	function checkComponent(actual, expected) {
 		var actualRendering = React.renderComponentToStaticMarkup(actual._descriptor);

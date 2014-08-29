@@ -11,11 +11,15 @@ var ConfigurationField = module.exports = React.createClass({
 		};
 	},
 
+	simulateChange: function simulateChange(value) {
+		this.handleChange({ target: { value: value }});
+	},
+
 	handleChange: function handleChange(event) {
 		this.setState({
 			value: new UserEnteredDollars(event.target.value)
 		});
-		if (this.props.onChange) this.props.onChange(event.target.value);
+		this.props.onChange(event.target.value);
 	},
 
   render: function render() {
@@ -32,7 +36,7 @@ RenderTarget.prototype.render = function render(values) {
 };
 
 RenderTarget.prototype.createComponent = function createComponent(self, userText) {
-	var invalidClass = this._rendering.invalid? "invalid" : null;
+	var invalidClass = this._rendering.invalid ? "invalid" : null;
 
 	return <div>
 		<label>{self.props.name}: </label>
