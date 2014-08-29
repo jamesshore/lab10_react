@@ -15,29 +15,28 @@ var GrowthRate = require("../values/growth_rate.js");
 var TaxRate = require("../values/tax_rate.js");
 
 var ApplicationUi = module.exports = React.createClass({
+
+	getInitialState: function() {
+		return {
+			config: this.props.userConfiguration || new UserConfiguration()
+		};
+	},
+
+	componentDidMount: function() {
+		var self = this;
+		this.state.config.onChange(function() {
+			self.forceUpdate();
+		});
+	},
+
   render: function() {
-	  var config = new UserConfiguration();
-
-	  var firstYear = new StockMarketYear(
-		  UserConfiguration.STARTING_YEAR,
-		  UserConfiguration.DEFAULT_STARTING_BALANCE,
-		  UserConfiguration.DEFAULT_STARTING_COST_BASIS,
-		  UserConfiguration.INTEREST_RATE,
-		  UserConfiguration.CAPITAL_GAINS_TAX_RATE
-	  );
-		var projection = new StockMarketProjection(
-			firstYear,
-			UserConfiguration.ENDING_YEAR,
-			UserConfiguration.DEFAULT_YEARLY_SPENDING
-		);
-
     return <div>
       <h1>Financial Projector</h1>
       <h2>A React Example from <em>Let’s Code: Test-Driven JavaScript</em></h2>
 
-      <ConfigurationPanel userConfiguration={config} />
+      <ConfigurationPanel userConfiguration={this.state.config} />
       <hr />
-	    <StockMarketTable stockMarketProjection={projection} />
+	    <StockMarketTable stockMarketProjection={projectionFor(this.state.config)} />
 
       <div className="footer">
 	      <p>This application demonstrates the React library. The financial calculations are made up. Do not use it for real finances.</p>
@@ -45,3 +44,19 @@ var ApplicationUi = module.exports = React.createClass({
     </div>;
   }
 });
+
+function projectionFor(config) {
+	var firstYear = new StockMarketYear(
+		UserConfiguration.STARTING_YEAR,
+		config.getStartingBalance(),
+		config.getStartingCostBasis(),
+		UserConfiguration.INTEREST_RATE,
+		UserConfiguration.CAPITAL_GAINS_TAX_RATE
+	);
+	var projection = new StockMarketProjection(
+		firstYear,
+		UserConfiguration.ENDING_YEAR,
+		config.getYearlySpending()
+	);
+	return projection;
+}

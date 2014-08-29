@@ -9,38 +9,35 @@ var StockMarketTable = require("./stock_market_table.js");
 var UserConfiguration = require("../persistence/user_configuration.js");
 var StockMarketYear = require("../domain/stock_market_year.js");
 var StockMarketProjection = require("../domain/stock_market_projection.js");
+var UserEnteredDollars = require("../values/user_entered_dollars.js");
 
 describe("ApplicationUi", function() {
 
 	var app;
-	var panel;
-	var table;
+	var config;
 
 	beforeEach(function() {
-		app = TestUtils.renderIntoDocument(<ApplicationUi />);
-		panel = TestUtils.findRenderedComponentWithType(app, ConfigurationPanel);
-		table = TestUtils.findRenderedComponentWithType(app, StockMarketTable);
+		config = new UserConfiguration();
+		config.setStartingBalance(new UserEnteredDollars("13821"));
+		app = TestUtils.renderIntoDocument(<ApplicationUi userConfiguration={config} />);
 	});
 
-	it("initializes configuration panel with default user configuration", function() {
-		checkComponent(panel, <ConfigurationPanel userConfiguration={new UserConfiguration()} />);
+	it("renders configuration panel with user configuration", function() {
+		checkComponent(panel(), <ConfigurationPanel userConfiguration={config} />);
 	});
 
 	it("renders stock market table with projection based on user configuration", function() {
-		var firstYear = new StockMarketYear(
-			UserConfiguration.STARTING_YEAR,
-			UserConfiguration.DEFAULT_STARTING_BALANCE,
-			UserConfiguration.DEFAULT_STARTING_COST_BASIS,
-			UserConfiguration.INTEREST_RATE,
-			UserConfiguration.CAPITAL_GAINS_TAX_RATE
-		);
-		var projection = new StockMarketProjection(
-			firstYear,
-			UserConfiguration.ENDING_YEAR,
-			UserConfiguration.DEFAULT_YEARLY_SPENDING
-		);
+		checkComponent(table(), <StockMarketTable stockMarketProjection={projectionFor(config)} />);
+	});
 
-		checkComponent(table, <StockMarketTable stockMarketProjection={projection} />);
+	it("uses default config if none provided", function() {
+		app = TestUtils.renderIntoDocument(<ApplicationUi />);
+		checkComponent(panel(), <ConfigurationPanel userConfiguration={new UserConfiguration()} />);
+	});
+
+	it("update stock market table when user configuration changes", function() {
+		config.setStartingBalance(new UserEnteredDollars("new value"));
+		checkComponent(table(), <StockMarketTable stockMarketProjection={projectionFor(config)} />);
 	});
 
 	function checkComponent(actual, expected) {
@@ -48,6 +45,30 @@ describe("ApplicationUi", function() {
 		var expectedRendering = React.renderComponentToStaticMarkup(expected);
 
 		expect(actualRendering).to.equal(expectedRendering);
+	}
+
+	function projectionFor(config) {
+		var firstYear = new StockMarketYear(
+			UserConfiguration.STARTING_YEAR,
+			config.getStartingBalance(),
+			config.getStartingCostBasis(),
+			UserConfiguration.INTEREST_RATE,
+			UserConfiguration.CAPITAL_GAINS_TAX_RATE
+		);
+		var projection = new StockMarketProjection(
+			firstYear,
+			UserConfiguration.ENDING_YEAR,
+			config.getYearlySpending()
+		);
+		return projection;
+	}
+
+	function panel() {
+		return TestUtils.findRenderedComponentWithType(app, ConfigurationPanel);
+	}
+
+	function table() {
+		return TestUtils.findRenderedComponentWithType(app, StockMarketTable);
 	}
 
 });
