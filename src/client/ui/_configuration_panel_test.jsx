@@ -28,10 +28,15 @@ describe("ConfigurationPanel", function() {
 			<ConfigurationField name="Yearly Spending" initialValue={UserConfiguration.DEFAULT_YEARLY_SPENDING} />);
 	});
 
-//	it("changes to configuration fields are applied to user configuration", function() {
-//		fields[0].simulateChange("new balance");
-//		expect(config.getStartingBalance()).to.equal(new UserEnteredDollars("new balance"));
-//	});
+	it("changes to configuration fields are applied to user configuration", function() {
+		fields[0].simulateChange("new balance");
+		fields[1].simulateChange("new cost basis");
+		fields[2].simulateChange("new spending");
+
+		expect(config.getStartingBalance()).to.eql(new UserEnteredDollars("new balance"));
+		expect(config.getStartingCostBasis()).to.eql(new UserEnteredDollars("new cost basis"));
+		expect(config.getYearlySpending()).to.eql(new UserEnteredDollars("new spending"));
+	});
 
 	function checkComponent(actual, expected) {
 		var actualRendering = React.renderComponentToStaticMarkup(actual._descriptor);
