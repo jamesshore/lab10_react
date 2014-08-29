@@ -4,6 +4,10 @@
 var failFast = require("../util/fail_fast.js");
 var Dollars = require("../values/dollars.js");
 var UserEnteredDollars = require("../values/user_entered_dollars.js");
+var Year = require("../values/year.js");
+var ValidDollars = require("../values/valid_dollars.js");
+var GrowthRate = require("../values/growth_rate.js");
+var TaxRate = require("../values/tax_rate.js");
 
 var UserConfiguration = module.exports = function UserConfiguration() {
 	this._changeHandlers = [];
@@ -15,6 +19,11 @@ var UserConfiguration = module.exports = function UserConfiguration() {
 UserConfiguration.DEFAULT_STARTING_BALANCE = new UserEnteredDollars("10000");
 UserConfiguration.DEFAULT_STARTING_COST_BASIS = new UserEnteredDollars("7000");
 UserConfiguration.DEFAULT_YEARLY_SPENDING = new UserEnteredDollars("695");
+
+UserConfiguration.STARTING_YEAR = new Year(2010);
+UserConfiguration.INTEREST_RATE = new GrowthRate(10);
+UserConfiguration.CAPITAL_GAINS_TAX_RATE = new TaxRate(25);
+UserConfiguration.ENDING_YEAR = new Year(2050);
 
 UserConfiguration.prototype.getStartingBalance = function getStartingBalance() {
 	return this._startingBalance;
