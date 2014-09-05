@@ -5,12 +5,12 @@
 
 	// Uncomment and modify the following list to cause the build to fail unless these browsers are tested.
 	var REQUIRED_BROWSERS = [
-		"IE 8.0.0 (Windows 7)",
-		"IE 9.0.0 (Windows 7)",
-		"Firefox 31.0.0 (Mac OS X 10.8)",
-		"Chrome 37.0.2062 (Mac OS X 10.8.5)",
-		"Safari 6.1.6 (Mac OS X 10.8.5)",
-		"Mobile Safari 7.0.0 (iOS 7.1)"
+//		"IE 8.0.0 (Windows 7)",
+//		"IE 9.0.0 (Windows 7)",
+//		"Firefox 31.0.0 (Mac OS X 10.8)",
+//		"Chrome 37.0.2062 (Mac OS X 10.8.5)",
+//		"Safari 6.1.6 (Mac OS X 10.8.5)",
+//		"Mobile Safari 7.0.0 (iOS 7.1)"
 	];
 
 	var shell = require("shelljs");
