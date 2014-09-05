@@ -1,11 +1,13 @@
 The Lab: Front-End Frameworks: React
 ===========
 
-This repository contains the sample code for the [Front-End Frameworks: React](http://www.letscodejavascript.com/v3/episodes/lab/10) episode of James Shore's [Let's Code: Test-Driven JavaScript](http://www.letscodejavascript.com) screencast. Let's Code: Test-Driven JavaScript is a screencast series focused on rigorous, professional JavaScript development.
+This repository contains the sample code for the [Front-End Frameworks: React](http://www.letscodejavascript.com/v3/episodes/lab/10) ([Part 1](http://www.letscodejavascript.com/v3/episodes/lab/10), [Part 2](http://www.letscodejavascript.com/v3/episodes/lab/10)) episodes of James Shore's [Let's Code: Test-Driven JavaScript](http://www.letscodejavascript.com) screencast. Let's Code: Test-Driven JavaScript is a screencast series focused on rigorous, professional JavaScript development.
 
 This episode is an exploration and review of the [React](http://facebook.github.io/react/) library for building front-end user interfaces. This repository contains an example application written in React. It demonstrates several concepts:
 
-1. **Sample application.** The sample application code can be found in `src/client`. The app runs inside `index.html`. It launches from `main.js`. The UI code is in the JSX files in `src/client/ui`, starting with `application_ui.jsx`. 
+1. **Sample application.** The sample application code can be found in `src/client`. The app runs inside `index.html`. It launches from `main.js`. The UI code is in the JSX files in `src/client/ui`, starting with `application_ui.jsx`.
+
+  The application also includes a domain layer, value objects, and a (simulated) persistence layer. Those layers are in subdirectories of `src/client`. See the screencast for more information about the sample app. (In particular, the way value objects are rendered was an experiment to see how well React could deal with an unusual architecture, not a pattern to follow in your own applications.)
 
 2. **Production-mode JSX transformation.** We use Jake to translate React's JSX language to JavaScript. See the "compileJsx" target in `Jakefile.js` and `build/util/jsx_runner.js` for example code. You can use `jsx_runner.js` in your own build scripts. 
 
