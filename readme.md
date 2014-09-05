@@ -9,11 +9,11 @@ This episode is an exploration and review of the [React](http://facebook.github.
 
   The application also includes a domain layer, value objects, and a (simulated) persistence layer. Those layers are in subdirectories of `src/client`. See the screencast for more information about the sample app. (In particular, the way value objects are rendered was an experiment to see how well React could deal with an unusual architecture, not a pattern to follow in your own applications.)
 
-2. **Production-mode JSX transformation.** We use Jake to translate React's JSX language to JavaScript. See the "compileJsx" target in `Jakefile.js` and `build/util/jsx_runner.js` for example code. You can use `jsx_runner.js` in your own build scripts. 
+2. **Unit Tests.** All the code is unit tested. You can find tests of the React code in `src/client/ui/_*_test.jsx`. The React tests demonstrate three different approaches: string comparison using `React.renderComponentToStaticMarkup()`, and targeted DOM comparisons using the TestUtils library (the second test), and a hybrid approach for comparing React components directly. (The hybrid approach is very useful, but it pokes into React internals, so you may want to avoid it or limit your use.)
 
-3. **Modularity.** We use CommonJS `require()` statements for modularity, and we use Browserify to make it work. See the sample application for an example of how the modularity works in practice. See the "browserify" target in `Jakefile.js` and `build/util/browserify_runner.js` for the automated build. You can use `browserify_runner.js` in your own build scripts.
+3. **Production-mode JSX transformation.** We use Jake to translate React's JSX language to JavaScript. See the "compileJsx" target in `Jakefile.js` and `build/util/jsx_runner.js` for example code. You can use `jsx_runner.js` in your own build scripts. 
 
-4. **Unit Tests.** We provide a sample unit test in `src/client/ui/_stock_market_table_row_test.js`. The file demonstrates two different approaches: string comparison using `React.renderComponentToStaticMarkup()` (the first test) and targeted DOM comparisons using the TestUtils library (the second test).
+4. **Modularity.** We use CommonJS `require()` statements for modularity, and we use Browserify to make it work. See the sample application for an example of how the modularity works in practice. See the "browserify" target in `Jakefile.js` and `build/util/browserify_runner.js` for the automated build. You can use `browserify_runner.js` in your own build scripts.
 
 For further details about how this code works, watch [the screencast](http://www.letscodejavascript.com/v3/episodes/lab/10).
 
