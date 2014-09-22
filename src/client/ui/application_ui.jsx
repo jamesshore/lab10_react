@@ -29,20 +29,20 @@ var ApplicationUi = module.exports = React.createClass({
 		});
 	},
 
-  render: function() {
-    return <div>
-      <h1>Financial Projector</h1>
-      <h2>A React Example from <em>Let’s Code: Test-Driven JavaScript</em></h2>
+	render: function() {
+		return <div>
+			<h1>Financial Projector</h1>
+			<h2>A React Example from<em>Let’s Code: Test-Driven JavaScript</em></h2>
 
-      <ConfigurationPanel userConfiguration={this.state.config} />
-      <hr />
-	    <StockMarketTable stockMarketProjection={projectionFor(this.state.config)} />
+			<ConfigurationPanel userConfiguration={this.state.config} />
+			<hr />
+			<StockMarketTable stockMarketProjection={projectionFor(this.state.config)} />
 
-      <div className="footer">
-	      <p>This application demonstrates the React library. The financial calculations are made up. Do not use it for real finances.</p>
-      </div>
-    </div>;
-  }
+			<div className="footer">
+				<p>This application demonstrates the React library. The financial calculations are made up. Do not use it for real finances.</p>
+			</div>
+		</div>;
+	}
 });
 
 function projectionFor(config) {
