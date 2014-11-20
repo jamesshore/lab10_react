@@ -32,7 +32,7 @@ var ApplicationUi = module.exports = React.createClass({
 	render: function() {
 		return <div>
 			<h1>Financial Projector</h1>
-			<h2>A React Example from<em>Let’s Code: Test-Driven JavaScript</em></h2>
+			<h2>A React Example from <em>Let’s Code: Test-Driven JavaScript</em></h2>
 
 			<ConfigurationPanel userConfiguration={this.state.config} />
 			<hr />
